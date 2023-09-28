@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import styled from "styled-components";
+import { Route, Routes, useLocation } from "react-router";
+import Sidebar from "./components/Sidebar/Sidebar.jsx";
+import Experience from "./components/Experience/Experience.jsx";
+import background from "./assets/background.jpg";
+import Projects from "./components/Projects/Projects.jsx";
+import About from "./components/About/About.jsx";
+import Archive from "./components/Archive/Archive.jsx";
+import { useTransition, animated } from "react-spring";
+
+const AppWrapper = styled.div`
+  display: flex;
+  height: 100%;
+`;
+
+const SidebarWrapper = styled.div`
+  text-align: right;
+  width: 250px;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const PageWrapper = styled.div`
+  background: gray;
+  flex: 1;
+  overflow: auto;
+  background: url(${background});
+`;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation();
+
+  const transitions = useTransition(location, {
+    from: { height: "0%", opacity: 0 },
+    enter: { height: "100%", opacity: 1 },
+    leave: { height: "0%", opacity: 0 },
+  });
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AppWrapper>
+      <SidebarWrapper>
+        <Sidebar />
+      </SidebarWrapper>
+      <PageWrapper>
+        {transitions((props, item, ...rest) => {
+          console.log({ props, item, rest });
+          return (
+            <animated.div style={props}>
+              <Routes location={item}>
+                <Route exact path="/" element={<About />} />
+                <Route exact path="/projects" element={<Projects />} />
+                <Route exact path="/projects/archive" element={<Archive />} />
+                <Route exact path="/experience" element={<Experience />} />
+              </Routes>
+            </animated.div>
+          );
+        })}
+      </PageWrapper>
+    </AppWrapper>
+  );
 }
 
-export default App
+export default App;
