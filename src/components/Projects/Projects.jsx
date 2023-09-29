@@ -9,6 +9,7 @@ import { useGesture } from "react-use-gesture";
 
 const Wrapper = styled.div`
   min-height: 100%;
+  padding: 20px;
   position: relative;
   justify-content: center;
   display: grid;
@@ -16,9 +17,13 @@ const Wrapper = styled.div`
   justify-items: center;
   align-items: start;
   padding-bottom: 100px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
 `;
 const ProjectItem = styled(Glass)`
-  width: 400px;
+  max-width: 400px;
   cursor: pointer;
   margin-top: 80px;
 
@@ -92,90 +97,94 @@ function Projects() {
   }, []);
 
   return (
-    <Wrapper>
-      <Project>
-        <ProjectItem>
-          <ImageWrapper>
-            <ProjectImage src={projectThumbnail} />
-          </ImageWrapper>
-          <ProjectContent>
-            <ProjectName className={"title"}>Wack-a-pol</ProjectName>
-            <ProjectDescription>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusamus animi doloremque eligendi hic illum nesciunt optio
-              possimus tempora?
-            </ProjectDescription>
-            <Skills
-              skills={[
-                "React",
-                "Typescript",
-                "CSS",
-                "HTML",
-                "Tailwind",
-                "React",
-                "React",
-              ]}
-            />
-          </ProjectContent>
-        </ProjectItem>
-      </Project>
+    <>
+      <Wrapper>
+        <Project>
+          <ProjectItem>
+            <ImageWrapper>
+              <ProjectImage src={projectThumbnail} />
+            </ImageWrapper>
+            <ProjectContent>
+              <ProjectName className={"title"}>Wack-a-pol</ProjectName>
+              <ProjectDescription>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Accusamus animi doloremque eligendi hic illum nesciunt optio
+                possimus tempora?
+              </ProjectDescription>
+              <Skills
+                skills={[
+                  "React",
+                  "Typescript",
+                  "CSS",
+                  "HTML",
+                  "Tailwind",
+                  "React",
+                  "React",
+                ]}
+              />
+            </ProjectContent>
+          </ProjectItem>
+        </Project>
 
-      <Project>
-        <ProjectItem>
-          <ImageWrapper>
-            <ProjectImage src={projectThumbnail} />
-          </ImageWrapper>
-          <ProjectContent>
-            <ProjectName className={"title"}>Wack-a-pol</ProjectName>
-            <ProjectDescription>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusamus animi doloremque eligendi hic illum nesciunt optio
-              possimus tempora?
-            </ProjectDescription>
-            <Skills
-              skills={[
-                "React",
-                "Typescript",
-                "CSS",
-                "HTML",
-                "Tailwind",
-                "React",
-                "React",
-              ]}
-            />
-          </ProjectContent>
-        </ProjectItem>
-      </Project>
+        <Project>
+          <ProjectItem>
+            <ImageWrapper>
+              <ProjectImage src={projectThumbnail} />
+            </ImageWrapper>
+            <ProjectContent>
+              <ProjectName className={"title"}>Wack-a-pol</ProjectName>
+              <ProjectDescription>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Accusamus animi doloremque eligendi hic illum nesciunt optio
+                possimus tempora?
+              </ProjectDescription>
+              <Skills
+                skills={[
+                  "React",
+                  "Typescript",
+                  "CSS",
+                  "HTML",
+                  "Tailwind",
+                  "React",
+                  "React",
+                ]}
+              />
+            </ProjectContent>
+          </ProjectItem>
+        </Project>
 
-      <Project>
-        <ProjectItem>
-          <ImageWrapper>
-            <ProjectImage src={projectThumbnail} />
-          </ImageWrapper>
-          <ProjectContent>
-            <ProjectName className={"title"}>Wack-a-pol</ProjectName>
-            <ProjectDescription>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusamus animi doloremque eligendi hic illum nesciunt optio
-              possimus tempora?
-            </ProjectDescription>
-            <Skills
-              skills={[
-                "React",
-                "Typescript",
-                "CSS",
-                "HTML",
-                "Tailwind",
-                "React",
-                "React",
-              ]}
-            />
-          </ProjectContent>
-        </ProjectItem>
-      </Project>
-
+        <Project>
+          <ProjectItem>
+            <ImageWrapper>
+              <ProjectImage src={projectThumbnail} />
+            </ImageWrapper>
+            <ProjectContent>
+              <ProjectName className={"title"}>Wack-a-pol</ProjectName>
+              <ProjectDescription>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Accusamus animi doloremque eligendi hic illum nesciunt optio
+                possimus tempora?
+              </ProjectDescription>
+              <Skills
+                skills={[
+                  "React",
+                  "Typescript",
+                  "CSS",
+                  "HTML",
+                  "Tailwind",
+                  "React",
+                  "React",
+                ]}
+              />
+            </ProjectContent>
+          </ProjectItem>
+        </Project>
+      </Wrapper>
+      <GoToNextPage isTop to={"/about"}>
+        About
+      </GoToNextPage>
       <GoToNextPage to={"/projects/archive"}>Archive</GoToNextPage>
-    </Wrapper>
+    </>
   );
 }
 

@@ -8,7 +8,7 @@ import { animated, useSpring } from "react-spring";
 import { useGesture } from "react-use-gesture";
 
 const Wrapper = styled.div`
-  padding-top: 50px;
+  padding-top: 80px;
   position: relative;
   min-height: 100%;
   display: flex;
@@ -29,6 +29,8 @@ const HoverableRow = styled(animated.div)`
   transition: background ease-in-out 0.4s;
 
   display: flex;
+  flex-wrap: wrap;
+
   width: 100%;
 
   &:hover {
@@ -65,7 +67,6 @@ const Row = ({ children }) => {
 
 const Cell = styled.div`
   padding: 10px 20px;
-  height: 100%;
   display: flex;
   align-items: center;
 `;
@@ -93,13 +94,25 @@ const NameCell = styled.a`
   color: #00b4b4;
   font-weight: 500;
   border-right: 1px solid rgba(255, 255, 255, 0.175);
+
   &:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 1000px) {
+    flex: 1;
   }
 `;
 const SkillsCell = styled(Cell)`
   flex: 1;
   border-right: 1px solid rgba(255, 255, 255, 0.175);
+
+  @media (max-width: 1000px) {
+    order: 3;
+    min-width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.175);
+    border-right: none;
+  }
 `;
 
 const LinkIcon = styled(FiExternalLink)`
@@ -122,116 +135,184 @@ const CodeCell = styled.a`
   }
 `;
 
+const archiveItems = [
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+  {
+    year: 2023,
+    projectName: "Tic Tac Toe",
+    skills: [
+      "React",
+      "Typescript",
+      "CSS",
+      "HTML",
+      "Tailwind",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+      "React",
+    ],
+    codeUrl: "#",
+  },
+];
+
 function Archive(props) {
   return (
-    <Wrapper>
-      <ProjectsTableWrapper>
-        <Row>
-          <YearCell>2023</YearCell>
-          <NameCell>
-            Tic Tac Toe <LinkIcon />
-          </NameCell>
-          <SkillsCell>
-            <Skills
-              skills={[
-                "React",
-                "Typescript",
-                "CSS",
-                "HTML",
-                "Tailwind",
-                "React",
-                "React",
-                "React",
-                "React",
-                "React",
-                "React",
-              ]}
-            />
-          </SkillsCell>
-          <CodeCell href={"#"}>
-            <FiCode />
-          </CodeCell>
-        </Row>
-        <Row>
-          <YearCell>2022</YearCell>
-          <NameCell>HalArt</NameCell>
-          <SkillsCell>
-            <Skills skills={["React", "Typescript"]} />
-          </SkillsCell>
-          <CodeCell href={"#"}>
-            <FiCode />
-          </CodeCell>
-        </Row>
-        <Row>
-          <YearCell>2023</YearCell>
-          <NameCell>Tic Tac Toe</NameCell>
-          <SkillsCell>
-            <Skills
-              skills={[
-                "React",
-                "Typescript",
-                "CSS",
-                "HTML",
-                "Tailwind",
-                "React",
-                "React",
-                "React",
-                "React",
-                "React",
-                "React",
-              ]}
-            />
-          </SkillsCell>
-          <CodeCell href={"#"}>
-            <FiCode />
-          </CodeCell>
-        </Row>
-        <Row>
-          <YearCell>2022</YearCell>
-          <NameCell>
-            HalArt <FiExternalLink />
-          </NameCell>
-          <SkillsCell>
-            <Skills skills={["React", "Typescript"]} />
-          </SkillsCell>
-          <CodeCell href={"#"}>
-            <FiCode />
-          </CodeCell>
-        </Row>
-        <Row>
-          <YearCell>2022</YearCell>
-          <NameCell>HalArt</NameCell>
-          <SkillsCell>
-            <Skills skills={["React", "Typescript"]} />
-          </SkillsCell>
-          <CodeCell href={"#"}>
-            <FiCode />
-          </CodeCell>
-        </Row>
-        <Row>
-          <YearCell>2022</YearCell>
-          <NameCell>HalArt</NameCell>
-          <SkillsCell>
-            <Skills skills={["React", "Typescript"]} />
-          </SkillsCell>
-          <CodeCell href={"#"}>
-            <FiCode />
-          </CodeCell>
-        </Row>
-        <Row>
-          <YearCell>2022</YearCell>
-          <NameCell>HalArt</NameCell>
-          <SkillsCell>
-            <Skills skills={["React", "Typescript"]} />
-          </SkillsCell>
-          <CodeCell href={"#"}>
-            <FiCode />
-          </CodeCell>
-        </Row>
-      </ProjectsTableWrapper>
+    <>
+      <Wrapper>
+        <ProjectsTableWrapper>
+          {[...archiveItems, ...archiveItems, ...archiveItems].map(
+            (archiveItem) => {
+              return (
+                <Row>
+                  <YearCell>{archiveItem.year}</YearCell>
+                  <NameCell>
+                    {archiveItem.projectName} <LinkIcon />
+                  </NameCell>
+                  <SkillsCell>
+                    <Skills skills={archiveItem.skills} />
+                  </SkillsCell>
+                  <CodeCell href={archiveItem.codeUrl}>
+                    <FiCode />
+                  </CodeCell>
+                </Row>
+              );
+            },
+          )}
+        </ProjectsTableWrapper>
+        <GoToNextPage isTop to={"/projects"}>
+          Projects
+        </GoToNextPage>
 
-      <GoToNextPage to={"/experience"}>Experience</GoToNextPage>
-    </Wrapper>
+        <GoToNextPage to={"/experience"}>Experience</GoToNextPage>
+      </Wrapper>
+    </>
   );
 }
 

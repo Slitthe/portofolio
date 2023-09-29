@@ -4,18 +4,18 @@ import styled from "styled-components";
 import Skills from "../Skills/Skills.jsx";
 import { animated, useSpring } from "react-spring";
 import { useDrag } from "react-use-gesture";
+import GoToNextPage from "../GoToNextPage/GoToNextPage.jsx";
 
 const Wrapper = styled.div`
   position: relative;
   min-height: 100%;
-  padding-top: 80px;
-  padding-bottom: 100px;
+  padding: 100px 20px 100px;
 `;
 
 const TimelineLine = styled.div`
   position: absolute;
   box-shadow: 0 0 3px 4px #00b4b4;
-  top: 0;
+  top: 100px;
   bottom: 0;
   left: 50%;
 
@@ -33,7 +33,7 @@ const Timeline = styled.div`
 `;
 
 const TimelineCard = styled(Glass)`
-  width: 400px;
+  max-width: 400px;
   //padding: 10px 20px;
   flex: 1;
   cursor: grab;
@@ -82,7 +82,7 @@ const TimelineContent = styled.div`
   margin-bottom: 16px;
 `;
 
-function Experience() {
+const DraggableItem = ({ children }) => {
   const [{ x, scale }, api] = useSpring(() => ({
     x: 0,
     scale: 1,
@@ -98,103 +98,76 @@ function Experience() {
   );
 
   return (
-    <Wrapper>
-      <TimelineLine />
+    <animated.div {...bind()}>
+      <animated.div style={{ x, scale }}>{children}</animated.div>
+    </animated.div>
+  );
+};
 
-      <Timeline>
-        <TimelineRow>
-          <TimelineItem $isLeft>
-            <animated.div {...bind()}>
-              <animated.div style={{ x, scale }}>
-                <TimelineCard>
-                  <TimelineCardSection>
-                    <TimelineTitle>Senior Front-End Developer</TimelineTitle>
-                    <TimelineContent>
-                      As a senior front-end developer, I played a pivotal role
-                      in creating stunning and responsive user interfaces for a
-                      wide range of web applications. My responsibilities
-                      included collaborating with cross-functional teams,
-                      translating design mockups into pixel-perfect HTML/CSS,
-                      and optimizing performance for exceptional user
-                      experiences.
-                    </TimelineContent>
-                    <Skills
-                      skills={[
-                        "HTML5",
-                        "CSS3/Sass",
-                        "JavaScript/jQuery",
-                        "Git",
-                        "React",
-                      ]}
-                    />
-                  </TimelineCardSection>
-                </TimelineCard>
-              </animated.div>
-            </animated.div>
-          </TimelineItem>
+const experienceItems = [
+  {
+    title: "Senior Front-End Developer",
+    content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
+    skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
+    range: "2021 - 2022",
+  },
+  {
+    title: "Senior Front-End Developer",
+    content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
+    skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
+    range: "2021 - 2022",
+  },
+  {
+    title: "Senior Front-End Developer",
+    content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
+    skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
+    range: "2021 - 2022",
+  },
+];
 
-          <TimelineItem $showTopMobile>2020-2021</TimelineItem>
-        </TimelineRow>
+function Experience() {
+  return (
+    <>
+      <Wrapper>
+        <GoToNextPage isTop to={"/projects/archive"}>
+          Archive
+        </GoToNextPage>
+        <TimelineLine />
 
-        <TimelineRow>
-          <TimelineItem $showTopMobile $isLeft>
-            2020-2021
-          </TimelineItem>
+        <Timeline>
+          {experienceItems.map((experience, index) => {
+            const contentItem = (
+              <TimelineItem $isLeft={index % 2 === 0}>
+                <DraggableItem>
+                  <TimelineCard>
+                    <TimelineCardSection>
+                      <TimelineTitle>{experience.title}</TimelineTitle>
+                      <TimelineContent>{experience.content}</TimelineContent>
+                      <Skills skills={experience.skills} />
+                    </TimelineCardSection>
+                  </TimelineCard>
+                </DraggableItem>
+              </TimelineItem>
+            );
 
-          <TimelineItem>
-            <TimelineCard>
-              <TimelineCardSection>
-                <TimelineTitle>Front-end developer</TimelineTitle>
-                <TimelineContent>
-                  Did some important stuff bla bla Did some important stuff bla
-                  blaDid some important stuff bla blaDid some important stuff
-                  bla blaDid some important stuff bla bla
-                </TimelineContent>
-                <Skills
-                  skills={[
-                    "React",
-                    "Typescript",
-                    "CSS",
-                    "HTML",
-                    "Tailwind",
-                    "React",
-                    "React",
-                  ]}
-                />
-              </TimelineCardSection>
-            </TimelineCard>
-          </TimelineItem>
-        </TimelineRow>
-
-        <TimelineRow>
-          <TimelineItem $isLeft>
-            <TimelineCard>
-              <TimelineCardSection>
-                <TimelineTitle>Front-end developer</TimelineTitle>
-                <TimelineContent>
-                  Did some important stuff bla bla Did some important stuff bla
-                  blaDid some important stuff bla blaDid some important stuff
-                  bla blaDid some important stuff bla bla
-                </TimelineContent>
-                <Skills
-                  skills={[
-                    "React",
-                    "Typescript",
-                    "CSS",
-                    "HTML",
-                    "Tailwind",
-                    "React",
-                    "React",
-                  ]}
-                />
-              </TimelineCardSection>
-            </TimelineCard>
-          </TimelineItem>
-
-          <TimelineItem $showTopMobile>2020-2021</TimelineItem>
-        </TimelineRow>
-      </Timeline>
-    </Wrapper>
+            const rangeItem = (
+              <TimelineItem
+                $isLeft={index % 2 !== 0}
+                $showTopMobile={index % 2 === 0}
+              >
+                2020-2021
+              </TimelineItem>
+            );
+            return (
+              <TimelineRow>
+                {index % 2 === 0 ? contentItem : rangeItem}
+                {index % 2 !== 0 ? contentItem : rangeItem}
+              </TimelineRow>
+            );
+          })}
+        </Timeline>
+      </Wrapper>
+    </>
   );
 }
 

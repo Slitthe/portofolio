@@ -5,17 +5,21 @@ import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import Experience from "./components/Experience/Experience.jsx";
 import background from "./assets/background.jpg";
 import Projects from "./components/Projects/Projects.jsx";
-import About from "./components/About/About.jsx";
+import Home from "./components/Home/Home.jsx";
 import Archive from "./components/Archive/Archive.jsx";
 import { useTransition, animated, useSpring } from "react-spring";
-import { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useDrag, useGesture, useScroll } from "react-use-gesture";
 import { debounce } from "lodash";
+import { useInertiaScrolling } from "./hooks/useInertiaScrolling.jsx";
+import About from "./components/About/About.jsx";
+// import Cursor from "./components/Cursor/Cursor.jsx";
 
 const AppWrapper = styled.div`
   display: flex;
   height: 100%;
   user-select: none;
+  background: url(${background});
 
   @media (max-width: 1100px) {
     flex-direction: column;
@@ -28,44 +32,44 @@ const AppWrapper = styled.div`
     bottom: 0;
     right: 0;
     left: 0;
-  }
-`;
-
-const SidebarWrapper = styled.div`
-  text-align: right;
-  width: 250px;
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
-
-  @media (max-width: 1100px) {
-    flex-direction: row;
-    height: auto;
-    width: 100%;
+    overflow: auto;
   }
 `;
 
 const PageWrapper = styled.div`
-  background: gray;
+  //background: gray;
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
   height: 100%;
-  background: url(${background});
+  // background: url(${background});
   position: relative;
 `;
 
-const navigationPaths = ["/", "/projects", "/projects/archive", "/experience"];
+const DragToSwipeIndicator = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+`;
 
+const navigationPaths = [
+  "/",
+  "/about",
+  "/projects",
+  "/projects/archive",
+  "/experience",
+];
+
+let test = 0;
 function App() {
   const domTarget = useRef(null);
   const widhtEl = useRef(null);
   const navigate = useNavigate();
 
-  const [{ top }, api] = useSpring(() => ({
+  const [{ top, opacity }, api] = useSpring(() => ({
     scale: 1,
     top: 0,
-    config: { mass: 5, tension: 150, friction: 40 },
+    opacity: 1,
+    config: { mass: 3, tension: 150, friction: 40 },
   }));
 
   // const location = useLocation();
@@ -75,50 +79,92 @@ function App() {
 
   // const test = useCallback(debounced, []);
 
+  const isDraggingRef = useRef(false);
   useDrag(({ down, movement: [mx, my] }) => {
-    // console.log(down);
     // api.start({ x: down ? mx : 0, y: down ? my : 0, immediate: down })
   });
+
   useGesture(
     {
+      // onMove: (data) => console.log(data.dragging),
       onDrag: (data) => {
-        // data.movement[1] = data.movement[1] * 14;
-        console.log(-data.movement[1]);
+        // data.movement[1] *= 10;
+        const root = document.querySelector(":root");
+        const pageElement = document.querySelector(".animated-page");
 
-        if (Math.abs(-data.movement[1]) > 150 && !data.dragging) {
-          const offset = -data.movement[1] > 0 ? 1 : -1;
-          const nextItem =
-            navigationPaths[
-              navigationPaths.indexOf(location.pathname) + offset
-            ];
-          if (nextItem) {
-            navigate(nextItem);
-          }
-        }
-        // console.log(-data.movement[1]);
-        // console.log(
-        //   Math.abs(
-        //     document.querySelector(":root").scrollHeight -
-        //       document.querySelector(":root").scrollTop -
-        //       document.querySelector(":root").clientHeight,
-        //   ) < 1,
-        // );
-        if (
-          data.dragging &&
+        const isScrolledToBottom =
           Math.abs(
-            document.querySelector(":root").scrollHeight -
-              document.querySelector(":root").scrollTop -
-              document.querySelector(":root").clientHeight,
-          ) < 1
-        ) {
-          if (-data.movement[1] > 0) {
-            api({ top: data.movement[1] });
-          } else {
-            api({ top: data.movement[1] });
-          }
-        } else {
-          api({ top: 0 });
+            pageElement.scrollHeight -
+              pageElement.scrollTop -
+              pageElement.clientHeight,
+          ) < 1;
+
+        const isScrolledToTop = pageElement.scrollTop === 0;
+
+        if (!data.dragging) {
+          api({ top: 0, opacity: 1 });
         }
+
+        // console.log(
+        //   data.vxvy[1].toFixed(2),
+        //   { dragging: data.dragging },
+        //   data.event.type,
+        //   data,
+        // );
+
+        // console.log({
+        //   data,
+        //   isScrolledToBottom,
+        //   isScrolledToTop,
+        //   dragging: data.dragging,
+        //   movement: data.movement[1],
+        // });
+
+        if (isScrolledToBottom || isScrolledToTop) {
+          // console.log(-data.movement[1]);
+
+          if (Math.abs(-data.movement[1]) > 150 && !data.dragging) {
+            // if scroll is at top, only allow navigation up
+            // if scroll is bottom only allow navigation down
+            // -1 top 1 bottom
+            const offset = -data.movement[1] > 0 ? 1 : -1;
+            const nextItem =
+              navigationPaths[
+                navigationPaths.indexOf(location.pathname) + offset
+              ];
+            if (nextItem) {
+              if (offset === -1 && isScrolledToTop) {
+                navigate(nextItem);
+              }
+
+              if (offset === 1 && isScrolledToBottom) {
+                navigate(nextItem);
+              }
+            }
+          }
+
+          if (data.dragging && (isScrolledToTop || isScrolledToBottom)) {
+            isDraggingRef.current = true;
+
+            if (isScrolledToBottom && data.movement[1] < 0) {
+              api({ top: data.movement[1], opacity: 0.5 });
+            }
+
+            if (isScrolledToTop && data.movement[1] > 0) {
+              api({ top: data.movement[1], opacity: 0.5 });
+            }
+            // if (data.movement[1] > 0) {
+            //   api({ top: data.movement[1], opacity: 0.5 });
+            // } else {
+            //   api({ top: data.movement[1], opacity: 0.5 });
+            // }
+          } else {
+            isDraggingRef.current = false;
+
+            // api({ top: 0, opacity: 1 });
+          }
+        }
+        // data.movement[1] = data.movement[1] * 14;
       },
     },
     { domTarget, eventOptions: { passive: false } },
@@ -154,6 +200,9 @@ function App() {
     },
   });
 
+  const animatedPageRef = useRef(null);
+  useInertiaScrolling(document.querySelector(".animated-page"), isDraggingRef);
+
   // const transitions = useTransition(location, {
   //   from: {
   //     opacity: 0,
@@ -164,27 +213,32 @@ function App() {
   // });
 
   return (
-    <AppWrapper>
-      <SidebarWrapper>
+    <>
+      <AppWrapper>
         <Sidebar />
-      </SidebarWrapper>
-      <PageWrapper ref={domTarget}>
-        {transitions((props, item, key) => (
-          <animated.div
-            key={key}
-            style={{ ...props, top }}
-            className="animated-page"
-          >
-            <Routes location={item}>
-              <Route exact path="/" element={<About />} />
-              <Route exact path="/projects" element={<Projects />} />
-              <Route exact path="/projects/archive" element={<Archive />} />
-              <Route exact path="/experience" element={<Experience />} />
-            </Routes>
-          </animated.div>
-        ))}
-      </PageWrapper>
-    </AppWrapper>
+
+        <PageWrapper ref={domTarget}>
+          {transitions((props, item, key) => (
+            <animated.div
+              key={key}
+              style={{ ...props, top, opacity }}
+              className="animated-page"
+              ref={animatedPageRef}
+            >
+              <Routes location={item}>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/about" element={<About />} />
+                <Route exact path="/projects" element={<Projects />} />
+                <Route exact path="/projects/archive" element={<Archive />} />
+                <Route exact path="/experience" element={<Experience />} />
+              </Routes>
+            </animated.div>
+          ))}
+          <DragToSwipeIndicator>Drag to swipe</DragToSwipeIndicator>
+        </PageWrapper>
+      </AppWrapper>
+      {/*<Cursor />*/}
+    </>
   );
 }
 

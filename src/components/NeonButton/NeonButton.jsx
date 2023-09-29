@@ -5,7 +5,6 @@ import { useLocation } from "react-router";
 
 const Button = styled(NavLink)`
   user-select: none;
-  cursor: pointer;
   position: relative;
   display: inline-block;
   padding: 25px 30px;
@@ -34,6 +33,9 @@ const Button = styled(NavLink)`
     margin: 0;
     flex: 1;
     text-align: center;
+    letter-spacing: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 `;
 
