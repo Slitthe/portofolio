@@ -1,7 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router";
 
-const Button = styled.a`
+const Button = styled(NavLink)`
   user-select: none;
   cursor: pointer;
   position: relative;
@@ -17,18 +19,8 @@ const Button = styled.a`
   margin: 40px 0;
   font-weight: bold;
 
-  ${({ $isActive, color }) =>
-    $isActive &&
-    css`
-      background: ${color};
-      color: #a1a1a1;
-      box-shadow:
-        0 0 5px ${color},
-        0 0 25px ${color},
-        0 0 50px ${color},
-        0 0 200px ${color};
-    `}
-  &:hover {
+  &:hover,
+  &.active {
     background: ${(props) => props.color};
     color: #050801;
     box-shadow:
@@ -37,11 +29,27 @@ const Button = styled.a`
       0 0 50px ${(props) => props.color},
       0 0 200px ${(props) => props.color};
   }
+
+  @media (max-width: 1100px) {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+  }
 `;
 
-function NeonButton({ children, color, isActive }) {
+function NeonButton({ children, color, isActive, to }) {
+  const location = useLocation();
   return (
-    <Button color={color} $isActive={isActive}>
+    <Button
+      to={to}
+      color={color}
+      $isActive={isActive}
+      onClick={(e) => {
+        if (location.pathname === to) {
+          e.preventDefault();
+        }
+      }}
+    >
       {children}
     </Button>
   );

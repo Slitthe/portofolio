@@ -1,22 +1,67 @@
-import React from "react";
+import React, { useRef } from "react";
 import GoToNextPage from "../GoToNextPage/GoToNextPage.jsx";
 import styled from "styled-components";
 import { Glass } from "../GlassContainer/GlassContainer.js";
 import Skills from "../Skills/Skills.jsx";
 import { FiCode, FiExternalLink } from "react-icons/fi";
+import { animated, useSpring } from "react-spring";
+import { useGesture } from "react-use-gesture";
 
 const Wrapper = styled.div`
-  padding-top: 100px;
+  padding-top: 50px;
   position: relative;
   min-height: 100%;
   display: flex;
+  padding-bottom: 75px;
   justify-content: center;
 `;
 
-const Row = styled(Glass)`
+// const Row = styled(Glass)`
+//   display: flex;
+//   width: 100%;
+// `;
+
+const HoverableRow = styled(animated.div)`
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.175);
+  border-radius: 16px;
+  transition: background ease-in-out 0.4s;
+
   display: flex;
   width: 100%;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
 `;
+
+const Row = ({ children }) => {
+  const domTarget = useRef(null);
+  const [{ scale }, api] = useSpring(() => ({
+    scale: 1,
+    config: { mass: 5, tension: 850, friction: 40 },
+  }));
+
+  useGesture(
+    {
+      onHover: ({ hovering }) =>
+        !hovering ? api({ scale: 1.0 }) : api({ scale: 1.02 }),
+    },
+    { domTarget, eventOptions: { passive: false } },
+  );
+
+  return (
+    <HoverableRow
+      ref={domTarget}
+      style={{
+        scale,
+      }}
+    >
+      {children}
+    </HoverableRow>
+  );
+};
 
 const Cell = styled.div`
   padding: 10px 20px;
@@ -31,6 +76,7 @@ const ProjectsTableWrapper = styled.div`
   width: 1000px;
   align-items: center;
   gap: 20px;
+  padding: 20px;
 `;
 
 const YearCell = styled(Cell)`

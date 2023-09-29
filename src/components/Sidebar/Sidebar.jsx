@@ -5,29 +5,17 @@ import NeonButton from "../NeonButton/NeonButton.jsx";
 function Sidebar(props) {
   return (
     <>
-      <NavLink to={"/"}>
-        {({ isActive }) => (
-          <NeonButton color="#008080" isActive={isActive}>
-            About
-          </NeonButton>
-        )}
-      </NavLink>
+      <NeonButton color="#008080" to={"/"}>
+        About
+      </NeonButton>
 
-      <NavLink to={"/projects"}>
-        {({ isActive }) => (
-          <NeonButton color="#008080" isActive={isActive}>
-            Projects
-          </NeonButton>
-        )}
-      </NavLink>
+      <NeonButton color="#008080" to={"/projects"}>
+        Projects
+      </NeonButton>
 
-      <NavLink to={"/experience"}>
-        {({ isActive }) => (
-          <NeonButton color="#008080" isActive={isActive}>
-            Experience
-          </NeonButton>
-        )}
-      </NavLink>
+      <NeonButton color="#008080" to={"/experience"}>
+        Experience
+      </NeonButton>
     </>
   );
 }
