@@ -23,6 +23,10 @@ const GoToNextPage = animated(styled(Link)`
   line-height: 1;
   transform-origin: 0;
 
+  @media (max-width: 1100px) {
+    padding: 8px 24px;
+  }
+
   .icon {
     order: ${(props) => (!props.$isTop ? 1 : -1)};
   }

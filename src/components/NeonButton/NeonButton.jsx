@@ -31,11 +31,12 @@ const Button = styled(NavLink)`
 
   @media (max-width: 1100px) {
     margin: 0;
-    flex: 1;
     text-align: center;
     letter-spacing: 0;
     padding-left: 0;
     padding-right: 0;
+
+    z-index: 1100;
   }
 `;
 

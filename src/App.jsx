@@ -11,8 +11,10 @@ import { useTransition, animated, useSpring } from "react-spring";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useDrag, useGesture, useScroll } from "react-use-gesture";
 import { debounce } from "lodash";
-import { useInertiaScrolling } from "./hooks/useInertiaScrolling.jsx";
+// import { useInertiaScrolling } from "./hooks/useInertiaScrolling.jsx";
 import About from "./components/About/About.jsx";
+import ContactMenu from "./components/ContactMenu.jsx";
+// import useCheckScrollBoundry from "./hooks/useCheckScrollBoundry.jsx";
 // import Cursor from "./components/Cursor/Cursor.jsx";
 
 const AppWrapper = styled.div`
@@ -46,18 +48,17 @@ const PageWrapper = styled.div`
 `;
 
 const DragToSwipeIndicator = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 10px;
-  right: 30px;
+  left: 30px;
+  color: rgba(255, 255, 255, 0.3);
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
-const navigationPaths = [
-  "/",
-  "/about",
-  "/projects",
-  "/projects/archive",
-  "/experience",
-];
+const navigationPaths = ["/", "/about", "/projects", "/archive", "/experience"];
 
 let test = 0;
 function App() {
@@ -201,7 +202,12 @@ function App() {
   });
 
   const animatedPageRef = useRef(null);
-  useInertiaScrolling(document.querySelector(".animated-page"), isDraggingRef);
+  //useInertiaScrolling(document.querySelector(".animated-page"), isDraggingRef);
+
+  // const { hasReachedBottom, hasReachedTop } = useCheckScrollBoundry(
+  //   document.querySelector(".animated-page"),
+  // );
+  // console.log({ hasReachedTop, hasReachedBottom });
 
   // const transitions = useTransition(location, {
   //   from: {
@@ -212,28 +218,50 @@ function App() {
   //   leave: { opacity: 0, transform: "translate3d(-50%,0,0)" },
   // });
 
+  // const [{ opacity: swipeIndicatorOpacity }, swipeIndicatorOpacityApi] =
+  //   useSpring(() => ({
+  //     opacity: 0,
+  //     config: { mass: 3, tension: 150, friction: 40 },
+  //   }));
+  //
+  // useEffect(() => {
+  //   console.log({ hasReachedTop, hasReachedBottom });
+  //   if (hasReachedBottom || hasReachedTop) {
+  //     swipeIndicatorOpacityApi({
+  //       opacity: 1,
+  //     });
+  //   } else {
+  //     swipeIndicatorOpacityApi({ opacity: 0 });
+  //   }
+  // }, [hasReachedTop, hasReachedBottom]);
+
   return (
     <>
+      <ContactMenu />
+
       <AppWrapper>
         <Sidebar />
 
         <PageWrapper ref={domTarget}>
-          {transitions((props, item, key) => (
-            <animated.div
-              key={key}
-              style={{ ...props, top, opacity }}
-              className="animated-page"
-              ref={animatedPageRef}
-            >
-              <Routes location={item}>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/about" element={<About />} />
-                <Route exact path="/projects" element={<Projects />} />
-                <Route exact path="/projects/archive" element={<Archive />} />
-                <Route exact path="/experience" element={<Experience />} />
-              </Routes>
-            </animated.div>
-          ))}
+          {transitions((props, item, key) => {
+            // console.log({ props, item, key });
+            return (
+              <animated.div
+                key={key}
+                style={{ ...props, top, opacity }}
+                className="animated-page"
+                ref={animatedPageRef}
+              >
+                <Routes location={item}>
+                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/about" element={<About />} />
+                  <Route exact path="/projects" element={<Projects />} />
+                  <Route exact path="/archive" element={<Archive />} />
+                  <Route exact path="/experience" element={<Experience />} />
+                </Routes>
+              </animated.div>
+            );
+          })}
           <DragToSwipeIndicator>Drag to swipe</DragToSwipeIndicator>
         </PageWrapper>
       </AppWrapper>

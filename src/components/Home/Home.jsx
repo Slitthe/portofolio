@@ -38,7 +38,7 @@ const Name = styled.h1`
 const Description = styled.div`
   font-size: 90px;
   @media (max-width: 1000px) {
-    font-size: 80px;
+    font-size: 70px;
   }
   font-weight: 300;
   color: #d3d3d3;

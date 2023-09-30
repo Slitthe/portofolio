@@ -66,8 +66,9 @@ const Project = ({ children }) => {
 
   useGesture(
     {
-      onHover: ({ hovering }) =>
-        !hovering ? api({ scale: 1.0 }) : api({ scale: 1.05 }),
+      onHover: ({ hovering }) => {
+        return !hovering ? api({ scale: 1.0 }) : api({ scale: 1.05 });
+      },
     },
     { domTarget, eventOptions: { passive: false } },
   );
@@ -179,11 +180,11 @@ function Projects() {
             </ProjectContent>
           </ProjectItem>
         </Project>
+        <GoToNextPage isTop to={"/about"}>
+          About
+        </GoToNextPage>
+        <GoToNextPage to={"/archive"}>Archive</GoToNextPage>
       </Wrapper>
-      <GoToNextPage isTop to={"/about"}>
-        About
-      </GoToNextPage>
-      <GoToNextPage to={"/projects/archive"}>Archive</GoToNextPage>
     </>
   );
 }

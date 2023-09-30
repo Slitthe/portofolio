@@ -123,13 +123,25 @@ const experienceItems = [
     skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
     range: "2021 - 2022",
   },
+  {
+    title: "Senior Front-End Developer",
+    content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
+    skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
+    range: "2021 - 2022",
+  },
+  {
+    title: "Senior Front-End Developer",
+    content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
+    skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
+    range: "2021 - 2022",
+  },
 ];
 
 function Experience() {
   return (
     <>
       <Wrapper>
-        <GoToNextPage isTop to={"/projects/archive"}>
+        <GoToNextPage isTop to={"/archive"}>
           Archive
         </GoToNextPage>
         <TimelineLine />
