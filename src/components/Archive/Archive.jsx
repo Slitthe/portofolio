@@ -3,9 +3,10 @@ import GoToNextPage from "../GoToNextPage/GoToNextPage.jsx";
 import styled from "styled-components";
 import { Glass } from "../GlassContainer/GlassContainer.js";
 import Skills from "../Skills/Skills.jsx";
-import { FiCode, FiExternalLink } from "react-icons/fi";
+import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { animated, useSpring } from "react-spring";
 import { useGesture } from "react-use-gesture";
+import { HoverableItem } from "../HoverableItem/HoverableItem.jsx";
 
 const Wrapper = styled.div`
   padding-top: 80px;
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
 //   width: 100%;
 // `;
 
-const HoverableRow = styled(animated.div)`
+const Row = styled(animated.div)`
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.175);
@@ -38,32 +39,32 @@ const HoverableRow = styled(animated.div)`
   }
 `;
 
-const Row = ({ children }) => {
-  const domTarget = useRef(null);
-  const [{ scale }, api] = useSpring(() => ({
-    scale: 1,
-    config: { mass: 5, tension: 850, friction: 40 },
-  }));
-
-  useGesture(
-    {
-      onHover: ({ hovering }) =>
-        !hovering ? api({ scale: 1.0 }) : api({ scale: 1.02 }),
-    },
-    { domTarget, eventOptions: { passive: false } },
-  );
-
-  return (
-    <HoverableRow
-      ref={domTarget}
-      style={{
-        scale,
-      }}
-    >
-      {children}
-    </HoverableRow>
-  );
-};
+// const Row = ({ children }) => {
+//   const domTarget = useRef(null);
+//   const [{ scale }, api] = useSpring(() => ({
+//     scale: 1,
+//     config: { mass: 5, tension: 850, friction: 40 },
+//   }));
+//
+//   useGesture(
+//     {
+//       onHover: ({ hovering }) =>
+//         !hovering ? api({ scale: 1.0 }) : api({ scale: 1.02 }),
+//     },
+//     { domTarget, eventOptions: { passive: false } },
+//   );
+//
+//   return (
+//     <HoverableRow
+//       ref={domTarget}
+//       style={{
+//         scale,
+//       }}
+//     >
+//       {children}
+//     </HoverableRow>
+//   );
+// };
 
 const Cell = styled.div`
   padding: 10px 20px;
@@ -90,6 +91,7 @@ const NameCell = styled.a`
   align-items: center;
   padding: 10px 20px;
   cursor: pointer;
+  text-decoration: none;
   width: 200px;
   color: #00b4b4;
   font-weight: 500;
@@ -126,6 +128,7 @@ const CodeCell = styled.a`
   align-items: center;
   justify-content: center;
   font-size: 16px;
+  text-decoration: none;
 
   cursor: pointer;
   color: #00b4b4;
@@ -292,15 +295,22 @@ function Archive(props) {
               return (
                 <Row>
                   <YearCell>{archiveItem.year}</YearCell>
-                  <NameCell>
+                  <HoverableItem component={NameCell} href={"#"}>
                     {archiveItem.projectName} <LinkIcon />
-                  </NameCell>
+                  </HoverableItem>
+
                   <SkillsCell>
                     <Skills skills={archiveItem.skills} />
                   </SkillsCell>
-                  <CodeCell href={archiveItem.codeUrl}>
-                    <FiCode />
-                  </CodeCell>
+
+                  <HoverableItem
+                    component={CodeCell}
+                    href={archiveItem.codeUrl}
+                    magnitude={1.2}
+                  >
+                    <FiGithub />
+                    {/*Code*/}
+                  </HoverableItem>
                 </Row>
               );
             },

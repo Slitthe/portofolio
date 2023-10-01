@@ -80,6 +80,8 @@ const AvatarIcon = styled(animated.div)`
   color: black;
   cursor: pointer;
 
+  position: relative;
+
   transition: background ease-in-out 0.2s;
 
   &:hover {

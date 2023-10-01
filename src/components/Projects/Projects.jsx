@@ -6,6 +6,7 @@ import Skills from "../Skills/Skills.jsx";
 import GoToNextPage from "../GoToNextPage/GoToNextPage.jsx";
 import { useSpring, animated } from "react-spring";
 import { useGesture } from "react-use-gesture";
+import { FiExternalLink } from "react-icons/fi";
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -22,14 +23,18 @@ const Wrapper = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   }
 `;
+
+const LinkIcon = styled(FiExternalLink)`
+  margin-left: 0.5em;
+`;
 const ProjectItem = styled(Glass)`
   max-width: 400px;
-  cursor: pointer;
+
   margin-top: 80px;
 
-  &:hover .title {
-    text-decoration: underline;
-  }
+  //&:hover .title {
+  //  text-decoration: underline;
+  //}
 `;
 
 const ImageWrapper = styled.div`
@@ -47,9 +52,21 @@ const ProjectContent = styled.div`
   padding: 10px 20px;
 `;
 
-const ProjectName = styled.div`
+const ProjectTitle = styled.div`
   font-weight: 500;
   color: #00b4b4;
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    display: flex;
+    align-items: center;
+  }
+
+  & > *:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const ProjectDescription = styled.div`
@@ -106,7 +123,14 @@ function Projects() {
               <ProjectImage src={projectThumbnail} />
             </ImageWrapper>
             <ProjectContent>
-              <ProjectName className={"title"}>Wack-a-pol</ProjectName>
+              <ProjectTitle className={"title"}>
+                <a>
+                  Wack-a-pol <LinkIcon />
+                </a>
+                <a>
+                  Source <LinkIcon />
+                </a>
+              </ProjectTitle>
               <ProjectDescription>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Accusamus animi doloremque eligendi hic illum nesciunt optio
@@ -133,7 +157,7 @@ function Projects() {
               <ProjectImage src={projectThumbnail} />
             </ImageWrapper>
             <ProjectContent>
-              <ProjectName className={"title"}>Wack-a-pol</ProjectName>
+              <ProjectTitle className={"title"}>Wack-a-pol</ProjectTitle>
               <ProjectDescription>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Accusamus animi doloremque eligendi hic illum nesciunt optio
@@ -160,7 +184,7 @@ function Projects() {
               <ProjectImage src={projectThumbnail} />
             </ImageWrapper>
             <ProjectContent>
-              <ProjectName className={"title"}>Wack-a-pol</ProjectName>
+              <ProjectTitle className={"title"}>Wack-a-pol</ProjectTitle>
               <ProjectDescription>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Accusamus animi doloremque eligendi hic illum nesciunt optio

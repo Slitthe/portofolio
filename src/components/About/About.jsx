@@ -28,7 +28,7 @@ const Content = styled.div`
 `;
 
 const Highlight = styled.span`
-  color: red;
+  color: #00b4b4;
 `;
 function About(props) {
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import NeonButton from "../NeonButton/NeonButton.jsx";
 import styled from "styled-components";
@@ -17,6 +17,7 @@ const SidebarWrapper = animated(styled.div`
   flex-direction: column;
   justify-content: center;
   box-shadow: 3px 2px 9px 0px black;
+  background: rgba(128, 128, 128, 0.09);
 
   @media (max-width: 1100px) {
     //flex-direction: row;
@@ -78,8 +79,10 @@ function Sidebar(props) {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const location = useLocation();
+  const matchesRef = useRef();
 
   const matches = useMediaQuery(1100);
+  matchesRef.current = matches;
 
   const [{ width, opacity }, api] = useSpring(() => ({
     width: 0,
@@ -127,7 +130,7 @@ function Sidebar(props) {
     opacity: 0,
     onRest: (e) => {
       if (e.value.opacity === 0) {
-        heightApi({ height: matches ? "100%" : "0%" });
+        heightApi({ height: matchesRef.current ? "100%" : "0%" });
         scaleApi({ scale: 0 });
         setIsMenuOpened(false);
         // console.log("closed");
@@ -137,10 +140,14 @@ function Sidebar(props) {
   }));
 
   useEffect(() => {
-    if (matches) {
+    if (matchesRef.current) {
       mobileOpacityApi({ opacity: 0 });
+      scaleApi({ scale: 0 });
+      setIsMenuOpened(false);
+    } else {
+      heightApi({ height: "0%" });
     }
-  }, [matches]);
+  }, [matchesRef.current]);
 
   // console.log(isMenuOpened);
   return (
@@ -181,8 +188,8 @@ function Sidebar(props) {
       <SidebarWrapper
         style={{
           width,
-          height: matches ? "100%" : height,
-          opacity: matches ? opacity : mobileOpacity,
+          height: matchesRef.current ? "100%" : height,
+          opacity: matchesRef.current ? opacity : mobileOpacity,
         }}
       >
         <NeonButton color="#008080" to={"/about"}>
