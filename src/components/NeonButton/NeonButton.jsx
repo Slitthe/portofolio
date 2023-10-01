@@ -8,7 +8,7 @@ const Button = styled(NavLink)`
   position: relative;
   display: inline-block;
   padding: 25px 30px;
-  color: ${(props) => props.color};
+  color: var(--main-color);
   text-decoration: none;
   text-transform: uppercase;
   transition: 0.5s;
@@ -20,13 +20,13 @@ const Button = styled(NavLink)`
 
   &:hover,
   &.active {
-    background: ${(props) => props.color};
+    background: var(--main-color);
     color: #050801;
     box-shadow:
-      0 0 5px ${(props) => props.color},
-      0 0 25px ${(props) => props.color},
-      0 0 50px ${(props) => props.color},
-      0 0 200px ${(props) => props.color};
+      0 0 5px var(--main-color),
+      0 0 25px var(--main-color),
+      0 0 50px var(--main-color),
+      0 0 200px var(--main-color);
   }
 
   @media (max-width: 1100px) {
@@ -40,12 +40,11 @@ const Button = styled(NavLink)`
   }
 `;
 
-function NeonButton({ children, color, isActive, to }) {
+function NeonButton({ children, isActive, to }) {
   const location = useLocation();
   return (
     <Button
       to={to}
-      color={color}
       $isActive={isActive}
       onClick={(e) => {
         if (location.pathname === to) {

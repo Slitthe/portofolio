@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const SkillPill = styled.span`
-  background: #00b4b4;
+  background: var(--text-main-color);
   font-weight: 500;
   padding: 4px 8px;
   box-sizing: border-box;

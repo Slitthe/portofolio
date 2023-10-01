@@ -1,13 +1,5 @@
 import React from "react";
-import GoToNextPage from "../GoToNextPage/GoToNextPage.jsx";
-import {
-  animated,
-  useChain,
-  useSpring,
-  useSpringRef,
-  useSprings,
-} from "react-spring";
-import ContactMenu from "../ContactMenu.jsx";
+import GoToNextPage from "../../components/GoToNextPage/GoToNextPage.jsx";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -28,7 +20,7 @@ const Content = styled.div`
 `;
 
 const Highlight = styled.span`
-  color: #00b4b4;
+  color: var(--text-main-color);
 `;
 function About(props) {
   return (

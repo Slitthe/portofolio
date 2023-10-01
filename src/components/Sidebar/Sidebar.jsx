@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
 import NeonButton from "../NeonButton/NeonButton.jsx";
 import styled from "styled-components";
 import { useLocation } from "react-router";
@@ -16,11 +15,10 @@ const SidebarWrapper = animated(styled.div`
   height: 100vh;
   flex-direction: column;
   justify-content: center;
-  box-shadow: 3px 2px 9px 0px black;
+  box-shadow: 3px 2px 9px 0 black;
   background: rgba(128, 128, 128, 0.09);
 
   @media (max-width: 1100px) {
-    //flex-direction: row;
     width: 100% !important;
     z-index: 1000;
     position: fixed;
@@ -56,7 +54,7 @@ const AvatarIcon = styled(animated.div)`
   font-size: 32px;
 
   justify-content: center;
-  color: #008080;
+  color: var(--main-color);
   cursor: pointer;
 
   position: fixed;
@@ -67,12 +65,6 @@ const AvatarIcon = styled(animated.div)`
   @media (min-width: 1100px) {
     display: none;
   }
-
-  //&:hover {
-  //  color: #008080;
-  //  background: #000;
-  //  border: 2px solid #008080;
-  //}
 `;
 
 function Sidebar(props) {
@@ -109,12 +101,8 @@ function Sidebar(props) {
     scale: 0,
     config: { mass: 3, tension: 150, friction: 40, duration: 300 },
     onRest: (e) => {
-      // console.log(e);
-
       if (e.value.scale === 100) {
         setIsMenuOpened(true);
-        // console.log("done");
-
         mobileOpacityApi({ opacity: 1 });
       } else {
       }
@@ -133,7 +121,6 @@ function Sidebar(props) {
         heightApi({ height: matchesRef.current ? "100%" : "0%" });
         scaleApi({ scale: 0 });
         setIsMenuOpened(false);
-        // console.log("closed");
       }
     },
     config: { mass: 3, tension: 150, friction: 40, duration: 100 },
@@ -141,6 +128,7 @@ function Sidebar(props) {
 
   useEffect(() => {
     if (matchesRef.current) {
+      heightApi({ height: "100%" });
       mobileOpacityApi({ opacity: 0 });
       scaleApi({ scale: 0 });
       setIsMenuOpened(false);
@@ -149,7 +137,6 @@ function Sidebar(props) {
     }
   }, [matchesRef.current]);
 
-  // console.log(isMenuOpened);
   return (
     <>
       <AvatarIcon
@@ -165,48 +152,22 @@ function Sidebar(props) {
       >
         {isMenuOpened ? <AiOutlineClose /> : <GiHamburgerMenu />}
       </AvatarIcon>
-      {/*<div style={{ position: "fixed", right: 0, top: 0, zIndex: 9999 }}>*/}
-      {/*  <button*/}
-      {/*    onClick={() => {*/}
-      {/*      */}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    asdas*/}
-      {/*  </button>*/}
-
-      {/*  <button*/}
-      {/*    style={{ zIndex: 1111 }}*/}
-      {/*    onClick={() => {*/}
-      {/*      */}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    asdas2*/}
-      {/*  </button>*/}
-      {/*</div>*/}
 
       <Overlay style={{ scale }} />
       <SidebarWrapper
         style={{
           width,
-          height: matchesRef.current ? "100%" : height,
+          height: height,
           opacity: matchesRef.current ? opacity : mobileOpacity,
         }}
       >
-        <NeonButton color="#008080" to={"/about"}>
-          About
-        </NeonButton>
+        <NeonButton to={"/about"}>About</NeonButton>
 
-        <NeonButton color="#008080" to={"/projects"}>
-          Projects
-        </NeonButton>
+        <NeonButton to={"/projects"}>Projects</NeonButton>
 
-        <NeonButton color="#008080" to={"/archive"}>
-          Archive
-        </NeonButton>
+        <NeonButton to={"/archive"}>Archive</NeonButton>
 
-        <NeonButton color="#008080" to={"/experience"}>
-          Experience
-        </NeonButton>
+        <NeonButton to={"/experience"}>Experience</NeonButton>
       </SidebarWrapper>
     </>
   );

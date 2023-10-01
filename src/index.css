@@ -13,6 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   background-size: contain;
+
+  --main-color: #008080;
+  --text-main-color: #00b4b4;
 }
 
 * {

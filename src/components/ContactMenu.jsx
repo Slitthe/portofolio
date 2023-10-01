@@ -6,7 +6,6 @@ import { useLocation } from "react-router";
 import { useEffect } from "react";
 import { FiGithub } from "react-icons/fi";
 import { AiOutlineLinkedin, AiOutlineFilePdf } from "react-icons/ai";
-import { SiUpwork } from "react-icons/si";
 
 const BUTTON_SIZE = 56;
 
@@ -22,17 +21,6 @@ const BUTTONS = [
   },
 ];
 
-const ImageContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
-
-    & > img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    },
-`;
-
 const BlurredBackground = styled(animated.div)`
   position: fixed;
   z-index: 500;
@@ -43,25 +31,8 @@ const BlurredBackground = styled(animated.div)`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  //backdrop-filter: blur(8px);
   align-items: center;
   touch-action: none;
-`;
-
-const GrabberButton = styled(animated.button)`
-  height: 17px;
-  border-radius: 8px;
-  background-color: #cccccc33;
-  border: none;
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-bottom: 4px;
-  width: calc(100% - 16px);
-
-  & > svg {
-    color: white;
-    transform: rotate(90deg);
-  },
 `;
 
 const AvatarIcon = styled(animated.div)`
@@ -75,7 +46,7 @@ const AvatarIcon = styled(animated.div)`
   align-items: center;
   align-content: center;
   font-size: 32px;
-  background: #008080;
+  background: var(--main-color);
   justify-content: center;
   color: black;
   cursor: pointer;
@@ -85,9 +56,9 @@ const AvatarIcon = styled(animated.div)`
   transition: background ease-in-out 0.2s;
 
   &:hover {
-    color: #008080;
+    color: var(--main-color);
     background: #000;
-    border: 2px solid #008080;
+    border: 2px solid var(--main-color);
   }
 `;
 
@@ -113,7 +84,7 @@ const FloatingButton = styled(animated.div)`
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-color:#008080;
+    background-color: var(--main-color);
   },
 `;
 
@@ -158,66 +129,46 @@ const ContactMenu = () => {
     }));
   }, []);
 
-  const getBounds = React.useCallback(() => {
-    const { height, width } = containerRef.current.getBoundingClientRect();
-
-    return {
-      top: 0,
-      left: 0,
-      right: window.innerWidth - width,
-      bottom: window.innerHeight - height,
-    };
-  }, []);
-
   const backgroundTimeoutRef = React.useRef();
   const avatarTimeoutRef = React.useRef();
 
-  const bindGestures = useGesture(
-    {
-      onHover: ({ hovering }) => {
-        if (hovering) {
-          if (backgroundTimeoutRef.current) {
-            clearTimeout(backgroundTimeoutRef.current);
-          }
-          if (avatarTimeoutRef.current) {
-            clearTimeout(avatarTimeoutRef.current);
-          }
-
-          isVisible.current = true;
-
-          api.start({
-            opacity: 1,
-          });
-
-          avatarApi.start({
-            y: 0,
-          });
-        } else {
-          backgroundTimeoutRef.current = setTimeout(() => {
-            api.start({
-              opacity: 0,
-            });
-          }, 2000);
-
-          avatarTimeoutRef.current = setTimeout(() => {
-            avatarApi.start((i) => ({
-              y: avatarRefInitialPositions.current[i],
-              onRest: () => {
-                isVisible.current = false;
-              },
-            }));
-          }, 4000);
+  const bindGestures = useGesture({
+    onHover: ({ hovering }) => {
+      if (hovering) {
+        if (backgroundTimeoutRef.current) {
+          clearTimeout(backgroundTimeoutRef.current);
         }
-      },
+        if (avatarTimeoutRef.current) {
+          clearTimeout(avatarTimeoutRef.current);
+        }
+
+        isVisible.current = true;
+
+        api.start({
+          opacity: 1,
+        });
+
+        avatarApi.start({
+          y: 0,
+        });
+      } else {
+        backgroundTimeoutRef.current = setTimeout(() => {
+          api.start({
+            opacity: 0,
+          });
+        }, 2000);
+
+        avatarTimeoutRef.current = setTimeout(() => {
+          avatarApi.start((i) => ({
+            y: avatarRefInitialPositions.current[i],
+            onRest: () => {
+              isVisible.current = false;
+            },
+          }));
+        }, 4000);
+      }
     },
-    {
-      drag: {
-        from: () => [x.get(), y.get()],
-        bounds: getBounds,
-        rubberband: true,
-      },
-    },
-  );
+  });
 
   const { onPointerEnter, onPointerLeave, onPointerDown, ...restGestures } =
     bindGestures();
@@ -238,13 +189,10 @@ const ContactMenu = () => {
   }));
 
   useEffect(() => {
-    // console.log(location.pathname);
     if (location.pathname !== "/") {
       loadingOpacityApi({
         opacity: 1,
       });
-
-      // console.log(location.pathname);
     } else {
       loadingOpacityApi({
         opacity: 0,
@@ -288,7 +236,7 @@ const ContactMenu = () => {
           style={{
             opacity: loadingOpacity,
             boxShadow: opacity.to(
-              (o) => `0px 3px 8px 2px rgba(0,0,0,${0.4 * 1 - o})`,
+              (o) => `0px 3px 8px 2px rgba(0,0,0,${0.4 - o})`,
             ),
           }}
         >

@@ -4,7 +4,6 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import React, { useEffect, useRef } from "react";
 import { animated, useSpring } from "react-spring";
 import { useGesture } from "react-use-gesture";
-import { useMediaQuery } from "../../hooks/useMediaQuery.jsx";
 
 const GoToNextPage = animated(styled(Link)`
   text-decoration: none;

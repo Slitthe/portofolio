@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { FiChevronDown } from "react-icons/fi";
-import GoToNextPage from "../GoToNextPage/GoToNextPage.jsx";
-import { useSpring, animated, useSpringRef } from "react-spring";
-import { useScroll } from "react-use-gesture";
-import { useMediaQuery } from "../../hooks/useMediaQuery.jsx";
+
+import GoToNextPage from "../../components/GoToNextPage/GoToNextPage.jsx";
+import { useSpring, animated } from "react-spring";
+
+import { titles } from "../../lib/data.js";
 
 const PageWrapper = styled.div`
   position: relative;
@@ -44,13 +43,7 @@ const Description = animated(styled.div`
   color: #d3d3d3;
 `);
 
-const titles = [
-  "Front-end developer",
-  "Full-stack developer",
-  "While loop enjoyer",
-];
-
-function Home(props) {
+function Home() {
   const titleIndexRef = useRef(0);
   const [title, setTitle] = useState(titles[titleIndexRef.current]);
 
@@ -84,10 +77,6 @@ function Home(props) {
       clearInterval(intervalRef.current);
     };
   }, []);
-
-  // The scroll listener
-
-  // Attach the scroll listener to the div
 
   return (
     <PageWrapper>
