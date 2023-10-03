@@ -12,18 +12,24 @@ const BUTTON_SIZE = 56;
 const BUTTONS = [
   {
     icon: <FiGithub />,
+    url: "https://github.com/Slitthe",
+    text: "GitHub",
   },
   {
     icon: <AiOutlineLinkedin />,
+    url: "https://www.linkedin.com/in/silviu-gherman/",
+    text: "LinkedIn",
   },
   {
     icon: <AiOutlineFilePdf />,
+    url: "https://drive.google.com/file/d/10mj-Q433UV5urOw5WXrPvXYT-_RsQfBR/view?usp=sharing",
+    text: "Resume",
   },
 ];
 
 const BlurredBackground = styled(animated.div)`
   position: fixed;
-  z-index: 500;
+  z-index: 1;
   right: 0;
   bottom: 12px;
   padding: 12px;
@@ -36,9 +42,9 @@ const BlurredBackground = styled(animated.div)`
   padding-bottom: 64px;
 `;
 
-const AvatarIcon = styled(animated.div)`
-  min-height: ${BUTTON_SIZE}px;
-  min-width: ${BUTTON_SIZE}px;
+const AvatarIcon = styled(animated.a)`
+  height: ${BUTTON_SIZE}px;
+  width: ${BUTTON_SIZE}px;
   border-radius: 50%;
   margin-left: 4px;
   margin-right: 4px;
@@ -59,7 +65,7 @@ const AvatarIcon = styled(animated.div)`
   &:hover {
     color: var(--main-color);
     background: #000;
-    border: 2px solid var(--main-color);
+    outline: 2px solid var(--main-color);
   }
 `;
 
@@ -90,6 +96,18 @@ const FloatingButton = styled(animated.div)`
     height: 100%;
     background-color: var(--main-color);
   },
+`;
+
+const ButtonText = styled.div`
+  position: absolute;
+  color: #cdcdcd;
+  left: -22px;
+  transform: translateX(-100%);
+  font-size: 16px;
+  background: var(--main-color);
+  border-radius: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 `;
 
 const ContactMenu = () => {
@@ -269,6 +287,8 @@ const ContactMenu = () => {
           <AvatarIcon
             key={index}
             style={{ opacity: buttonsOpacity }}
+            href={button.url}
+            target={"_blank"}
             // ref={(ref) => (avatarRefs.current[index] = ref)}
             // css={{
             //   backgroundColor: COLORS[index],
@@ -277,6 +297,7 @@ const ContactMenu = () => {
             //   ...springs,
             // }}
           >
+            <ButtonText>{button.text}</ButtonText>
             {BUTTONS[index].icon}
           </AvatarIcon>
         ))}

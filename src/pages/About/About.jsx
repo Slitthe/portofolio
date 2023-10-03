@@ -31,25 +31,29 @@ function About(props) {
 
       <Content>
         <p>
-          A <Highlight>Front-end developer</Highlight> is a master of crafting
-          beautiful, intuitive, and user-friendly digital interfaces. By
-          leveraging a robust toolkit of coding languages such as{" "}
-          <Highlight>HTML</Highlight>, <Highlight>CSS</Highlight>, and
-          <Highlight>JavaScript</Highlight>, a front-end developer ensures that
-          the appearance and interactive aspects of a website or application are
-          engaging and accessible across a multitude of platforms and devices.
+          <Highlight>JavaScript</Highlight> developer with 5+ years of
+          professional experience, mainly using front-end technologies such as{" "}
+          <Highlight>React</Highlight>, <Highlight>Redux</Highlight>,{" "}
+          <Highlight>TypeScript</Highlight>, <Highlight>Tailwind</Highlight>,
+          and many others. I pride myself in building interactive, responsive,
+          and performant web applications.
         </p>
         <p>
-          With an eye for design and a knack for problem-solving, they play a
-          critical role in building digital experiences that not only look good
-          but function seamlessly. Their ability to bridge the gap between
-          graphical design and technical implementation makes them invaluable
-          assets in the ever-evolving field of web development.
+          Although my main area of expertise is in front-end, I also have an
+          interest in full-stack applications, using auxiliary stack and tools
+          such as <Highlight>Node.js</Highlight> or{" "}
+          <Highlight>Wordpress</Highlight>
         </p>
         <p>
-          Their work is an art of translating design mockups into interactive
-          digital landscapes that guide users smoothly, creating delightful
-          digital experiences that drive engagement and satisfaction.
+          I get great pleasure from building uniform and unified user
+          experience, and, as such I appreciate collaborating with people who
+          share similar values as these ones.
+        </p>
+
+        <p>
+          Worked in a variety of collaboration styles and team dynamics
+          (on-site, remote, distributed, employed, freelancing, contracting),
+          and as such I consider myself pretty adaptable in this regard.
         </p>
       </Content>
 

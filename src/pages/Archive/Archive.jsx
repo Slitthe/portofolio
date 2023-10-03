@@ -57,17 +57,20 @@ const YearCell = styled(Cell)`
 
 const NameCell = styled.a`
   display: flex;
+  flex: 1;
   align-items: center;
   padding: 10px 20px;
-  cursor: pointer;
+  cursor: ${(props) => (!!props.$isLink ? "pointer" : "initial")};
   text-decoration: none;
   width: 200px;
   color: var(--text-main-color);
   font-weight: 500;
   border-right: 1px solid rgba(255, 255, 255, 0.175);
 
+  // $isLink
+
   &:hover {
-    text-decoration: underline;
+    text-decoration: ${(props) => (props.$isLink ? "underline" : "none")};
   }
 
   @media (max-width: 1000px) {
@@ -77,10 +80,11 @@ const NameCell = styled.a`
 const SkillsCell = styled(Cell)`
   flex: 1;
   border-right: 1px solid rgba(255, 255, 255, 0.175);
+  order: 2;
+  min-width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.175);
 
   @media (max-width: 1000px) {
-    order: 3;
-    min-width: 100%;
     border-top: 1px solid rgba(255, 255, 255, 0.175);
     border-right: none;
   }
@@ -107,33 +111,51 @@ const CodeCell = styled.a`
   }
 `;
 
+const DescriptionCell = styled(Cell)`
+  border-top: 1px solid rgba(255, 255, 255, 0.175);
+  width: 100%;
+`;
+
 function Archive() {
   return (
     <>
       <Wrapper>
         <ProjectsTableWrapper>
-          {archiveItems.map((archiveItem) => {
-            return (
-              <Row>
-                <YearCell>{archiveItem.year}</YearCell>
-                <HoverableItem component={NameCell} href={"#"}>
-                  {archiveItem.projectName} <LinkIcon />
-                </HoverableItem>
+          {archiveItems
+            .sort((a, b) => (a.year < b.year ? 1 : -1))
+            .map((archiveItem) => {
+              return (
+                <Row>
+                  <YearCell>{archiveItem.year}</YearCell>
+                  <HoverableItem
+                    $isLink={archiveItem?.deployedUrl}
+                    component={NameCell}
+                    href={archiveItem?.deployedUrl || null}
+                    target="_blank"
+                    magnitude={archiveItem?.deployedUrl ? 1.02 : 1}
+                  >
+                    {archiveItem.projectName}{" "}
+                    {archiveItem?.deployedUrl && <LinkIcon />}
+                  </HoverableItem>
 
-                <SkillsCell>
-                  <Skills skills={archiveItem.skills} />
-                </SkillsCell>
+                  <SkillsCell>
+                    <Skills skills={archiveItem.skills} />
+                  </SkillsCell>
 
-                <HoverableItem
-                  component={CodeCell}
-                  href={archiveItem.codeUrl}
-                  magnitude={1.2}
-                >
-                  <FiGithub />
-                </HoverableItem>
-              </Row>
-            );
-          })}
+                  <HoverableItem
+                    component={CodeCell}
+                    href={archiveItem.codeUrl}
+                    target="_blank"
+                    magnitude={1.2}
+                  >
+                    <FiGithub />
+                  </HoverableItem>
+                  {archiveItem.description && (
+                    <DescriptionCell>{archiveItem.description}</DescriptionCell>
+                  )}
+                </Row>
+              );
+            })}
         </ProjectsTableWrapper>
         <GoToNextPage isTop to={"/projects"}>
           Projects

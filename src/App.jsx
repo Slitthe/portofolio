@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { Route, Routes, useLocation, useNavigate } from "react-router";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router";
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import Experience from "./pages/Experience/Experience.jsx";
 import background from "./assets/background.jpg";
@@ -53,6 +59,12 @@ const DragToSwipeIndicator = styled.div`
 `;
 
 const navigationPaths = ["/", "/about", "/projects", "/archive", "/experience"];
+const Test = (props) => {
+  let { id } = useParams();
+  console.log({ id });
+
+  return <div>asdas</div>;
+};
 
 function App() {
   const domTarget = useRef(null);
@@ -114,6 +126,7 @@ function App() {
   );
 
   const location = useLocation();
+  console.log(location.pathname.startsWith("/projects/"));
   const currentPathIndex = navigationPaths.indexOf(location.pathname);
   const prevPathIndex = useRef(currentPathIndex);
 
@@ -151,16 +164,17 @@ function App() {
             return (
               <animated.div
                 key={key}
-                style={{ ...props, top, opacity }}
+                style={{ ...props, top }}
                 className="animated-page"
                 ref={animatedPageRef}
               >
                 <Routes location={item}>
-                  <Route exact path="/" element={<Home />} />
-                  <Route exact path="/about" element={<About />} />
-                  <Route exact path="/projects" element={<Projects />} />
-                  <Route exact path="/archive" element={<Archive />} />
-                  <Route exact path="/experience" element={<Experience />} />
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/projects/*" element={<Projects />} />
+
+                  <Route path="/archive" element={<Archive />} />
+                  <Route path="/experience" element={<Experience />} />
                 </Routes>
               </animated.div>
             );

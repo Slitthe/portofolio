@@ -114,8 +114,9 @@ function Experience() {
                 $isLeft={index % 2 !== 0}
                 $showTopMobile={index % 2 === 0}
               >
-                <div>{experience.range}</div>
-                <div>{experience.company}</div>
+                {experience.sideInfoItems.map((item) => (
+                  <div>{item}</div>
+                ))}
               </TimelineItem>
             );
             return (

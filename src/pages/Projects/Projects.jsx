@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Glass } from "../../components/GlassContainer/GlassContainer.js";
 import styled from "styled-components";
 import Skills from "../../components/Skills/Skills.jsx";
@@ -7,6 +7,7 @@ import { useSpring, animated } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import { FiExternalLink } from "react-icons/fi";
 import { projects } from "../../lib/data.js";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -26,11 +27,11 @@ const Wrapper = styled.div`
 const LinkIcon = styled(FiExternalLink)`
   margin-left: 0.5em;
 `;
-const ProjectItem = styled(Glass)`
+const ProjectItem = animated(styled(Glass)`
   max-width: 400px;
 
   margin-top: 80px;
-`;
+`);
 
 const ImageWrapper = styled.div`
   width: 100%;
@@ -96,7 +97,7 @@ const Project = ({ children }) => {
         scale,
       }}
     >
-      {children}
+      <ProjectItem>{children}</ProjectItem>
     </animated.div>
   );
 };
@@ -108,23 +109,32 @@ function Projects() {
         {projects.map((project) => {
           return (
             <Project>
-              <ProjectItem>
-                <ImageWrapper>
-                  <ProjectImage src={project.image} />
-                </ImageWrapper>
-                <ProjectContent>
-                  <ProjectTitle className={"title"}>
-                    <a href={project.title.href}>
-                      {project.title.name} <LinkIcon />
+              <ImageWrapper>
+                <ProjectImage src={project.image} />
+              </ImageWrapper>
+              <Link to={"/projects/23"}>23</Link>
+              <ProjectContent>
+                <ProjectTitle className={"title"}>
+                  <a href={project.title.href} target="_blank">
+                    {project.title.name} <LinkIcon />
+                  </a>
+                  {project.sourceHref && (
+                    <a
+                      target="_blank"
+                      href={project.sourceHref || null}
+                      onClick={(e) => {
+                        if (!project.sourceHref) {
+                          e.preventDefault();
+                        }
+                      }}
+                    >
+                      Source {project.sourceHref && <LinkIcon />}
                     </a>
-                    <a href={project.sourceHref}>
-                      Source <LinkIcon />
-                    </a>
-                  </ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <Skills skills={project.skills} />
-                </ProjectContent>
-              </ProjectItem>
+                  )}
+                </ProjectTitle>
+                <ProjectDescription>{project.description}</ProjectDescription>
+                <Skills skills={project.skills} />
+              </ProjectContent>
             </Project>
           );
         })}
