@@ -80,34 +80,39 @@ const titles = [
 
 const experienceItems = [
   {
-    title: "Senior Front-End Developer",
-    content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
-    skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
-    range: "2021 - 2022",
+    title: "Front End Developer",
+    content: `Worked on a web-based platform used internally by the employees of one of the biggest online and offline retailers of tech goods in Romania, which is designed to help people compare loans offered by different credit institutions`,
+    skills: ["HTML", "CSS", "JS", "React", "Redux", "Git/GitLab", "Tailwind"],
+    range: "2022 - 2023",
+    company: "Axsys",
   },
   {
     title: "Senior Front-End Developer",
     content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
     skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
     range: "2021 - 2022",
+    company: "Wirtek",
   },
   {
     title: "Senior Front-End Developer",
     content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
     skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
     range: "2021 - 2022",
+    company: "Wirtek",
   },
   {
     title: "Senior Front-End Developer",
     content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
     skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
     range: "2021 - 2022",
+    company: "Wirtek",
   },
   {
     title: "Senior Front-End Developer",
     content: `As a senior front-end developer, I played a pivotal role in creating stunning and responsive user interfaces for a wide range of web applications. My responsibilities included collaborating with cross-functional teams, translating design mockups into pixel-perfect HTML/CSS, and optimizing performance for exceptional user experiences.`,
     skills: ["HTML5", "CSS3/Sass", "JavaScript/jQuery", "Git", "React"],
     range: "2021 - 2022",
+    company: "Wirtek",
   },
 ];
 

@@ -3,7 +3,7 @@ import { animated, useSpring, useSprings } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import styled from "styled-components";
 import { useLocation } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FiGithub } from "react-icons/fi";
 import { AiOutlineLinkedin, AiOutlineFilePdf } from "react-icons/ai";
 
@@ -25,7 +25,7 @@ const BlurredBackground = styled(animated.div)`
   position: fixed;
   z-index: 500;
   right: 0;
-  bottom: 0;
+  bottom: 12px;
   padding: 12px;
   border-radius: 8px;
   display: flex;
@@ -33,11 +33,12 @@ const BlurredBackground = styled(animated.div)`
   gap: 8px;
   align-items: center;
   touch-action: none;
+  padding-bottom: 64px;
 `;
 
 const AvatarIcon = styled(animated.div)`
-  width: ${BUTTON_SIZE}px;
-  height: ${BUTTON_SIZE}px;
+  min-height: ${BUTTON_SIZE}px;
+  min-width: ${BUTTON_SIZE}px;
   border-radius: 50%;
   margin-left: 4px;
   margin-right: 4px;
@@ -67,10 +68,13 @@ const FloatingButton = styled(animated.div)`
   height: ${BUTTON_SIZE}px;
   border-radius: 50%;
   border: none;
-  position: relative;
+  position: absolute;
+  
+
   background-clip: content-box;
-  z-index: 0;
   touch-action: none;
+  bottom: 8px;
+  z-index: 1;
 
   &:focus-visible {
     outline-offset: 2px;
@@ -89,6 +93,7 @@ const FloatingButton = styled(animated.div)`
 `;
 
 const ContactMenu = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const buttonRef = React.useRef(null);
   const avatarRefs = React.useRef([]);
@@ -96,6 +101,16 @@ const ContactMenu = () => {
   const containerRef = React.useRef(null);
 
   const isVisible = React.useRef(false);
+
+  const [{ height, opacity: buttonsOpacity }, containerApi] = useSpring(() => ({
+    height: 64,
+    opacity: 0,
+    config: { mass: 3, tension: 450, friction: 40, duration: 300 },
+  }));
+
+  useEffect(() => {
+    console.log({ isMenuOpen });
+  }, [isMenuOpen]);
 
   const [{ x, y, opacity }, api] = useSpring(
     () => ({
@@ -106,13 +121,13 @@ const ContactMenu = () => {
     [],
   );
 
-  const [avatarSprings, avatarApi] = useSprings(
-    BUTTONS.length,
-    (i) => ({
-      y: 0,
-    }),
-    [],
-  );
+  // const [avatarSprings, avatarApi] = useSprings(
+  //   BUTTONS.length,
+  //   (i) => ({
+  //     // y: 0,
+  //   }),
+  //   [],
+  // );
 
   React.useLayoutEffect(() => {
     if (avatarRefInitialPositions.current.length === 0) {
@@ -123,10 +138,10 @@ const ContactMenu = () => {
       );
     }
 
-    avatarApi.start((i) => ({
-      y: avatarRefInitialPositions.current[i],
-      immediate: true,
-    }));
+    // avatarApi.start((i) => ({
+    //   y: avatarRefInitialPositions.current[i],
+    //   immediate: true,
+    // }));
   }, []);
 
   const backgroundTimeoutRef = React.useRef();
@@ -134,6 +149,7 @@ const ContactMenu = () => {
 
   const bindGestures = useGesture({
     onHover: ({ hovering }) => {
+      console.log({ hovering });
       if (hovering) {
         if (backgroundTimeoutRef.current) {
           clearTimeout(backgroundTimeoutRef.current);
@@ -144,12 +160,14 @@ const ContactMenu = () => {
 
         isVisible.current = true;
 
+        setIsMenuOpen(true);
         api.start({
           opacity: 1,
         });
 
-        avatarApi.start({
-          y: 0,
+        containerApi.start({
+          height: 68 * (BUTTONS.length + 1),
+          opacity: 1,
         });
       } else {
         backgroundTimeoutRef.current = setTimeout(() => {
@@ -159,12 +177,21 @@ const ContactMenu = () => {
         }, 2000);
 
         avatarTimeoutRef.current = setTimeout(() => {
-          avatarApi.start((i) => ({
-            y: avatarRefInitialPositions.current[i],
+          containerApi({
+            height: 64,
+            opacity: 0,
             onRest: () => {
               isVisible.current = false;
+              setIsMenuOpen(false);
             },
-          }));
+          });
+          // avatarApi.start((i) => ({
+          //   // y: avatarRefInitialPositions.current[i],
+          //   onRest: () => {
+          //     isVisible.current = false;
+          //     setIsMenuOpen(false);
+          //   },
+          // }));
         }, 4000);
       }
     },
@@ -204,33 +231,18 @@ const ContactMenu = () => {
     <>
       <BlurredBackground
         ref={containerRef}
+        onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
         onPointerDown={handlePointerDown(true)}
         {...restGestures}
         style={{
-          x,
-          y,
+          height: height,
           opacity: loadingOpacity,
           backgroundColor: opacity.to((o) => `rgba(0,0,0,${0.2 * o})`),
         }}
       >
-        {avatarSprings.map((springs, index) => (
-          <AvatarIcon
-            key={BUTTONS[index]}
-            ref={(ref) => (avatarRefs.current[index] = ref)}
-            // css={{
-            //   backgroundColor: COLORS[index],
-            // }}
-            style={{
-              ...springs,
-            }}
-          >
-            {BUTTONS[index].icon}
-          </AvatarIcon>
-        ))}
         <FloatingButton
           ref={buttonRef}
-          onPointerEnter={onPointerEnter}
           onPointerDown={handlePointerDown(false)}
           {...restGestures}
           style={{
@@ -253,6 +265,21 @@ const ContactMenu = () => {
             </svg>
           </span>
         </FloatingButton>
+        {BUTTONS.map((button, index) => (
+          <AvatarIcon
+            key={index}
+            style={{ opacity: buttonsOpacity }}
+            // ref={(ref) => (avatarRefs.current[index] = ref)}
+            // css={{
+            //   backgroundColor: COLORS[index],
+            // }}
+            // style={{
+            //   ...springs,
+            // }}
+          >
+            {BUTTONS[index].icon}
+          </AvatarIcon>
+        ))}
       </BlurredBackground>
     </>
   );

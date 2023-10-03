@@ -114,7 +114,8 @@ function Experience() {
                 $isLeft={index % 2 !== 0}
                 $showTopMobile={index % 2 === 0}
               >
-                2020-2021
+                <div>{experience.range}</div>
+                <div>{experience.company}</div>
               </TimelineItem>
             );
             return (

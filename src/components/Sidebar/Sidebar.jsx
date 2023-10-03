@@ -162,11 +162,8 @@ function Sidebar(props) {
         }}
       >
         <NeonButton to={"/about"}>About</NeonButton>
-
         <NeonButton to={"/projects"}>Projects</NeonButton>
-
         <NeonButton to={"/archive"}>Archive</NeonButton>
-
         <NeonButton to={"/experience"}>Experience</NeonButton>
       </SidebarWrapper>
     </>
