@@ -1,13 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Glass } from "../../components/GlassContainer/GlassContainer.js";
 import styled from "styled-components";
 import Skills from "../../components/Skills/Skills.jsx";
 import GoToNextPage from "../../components/GoToNextPage/GoToNextPage.jsx";
 import { useSpring, animated } from "react-spring";
 import { useGesture } from "react-use-gesture";
-import { FiExternalLink } from "react-icons/fi";
+import { FiExternalLink, FiMinimize } from "react-icons/fi";
 import { projects } from "../../lib/data.js";
 import { Link } from "react-router-dom";
+import FullScreenExpandable from "../../components/FullScreenExpandable/FullScreenExpandable.jsx";
+import { FiMaximize } from "react-icons/fi";
+import UIElementsVisibilityContextProvider, {
+  UIElementsVisibilityContext,
+} from "../../context/UIElementsVisibilityContext.jsx";
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -35,7 +40,8 @@ const ProjectItem = animated(styled(Glass)`
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: 200px;
+  height: ${(props) => (props.$isMaximized ? "auto" : "200px")};
+  flex: ${(props) => (props.$isMaximized ? 1 : 0)};
 `;
 const ProjectImage = styled.img`
   border-radius: 16px 16px 0 0;
@@ -76,6 +82,13 @@ const ProjectDescription = styled.div`
 
 const Project = ({ children }) => {
   const domTarget = useRef(null);
+  const targetRef = useRef(null);
+  const { setShowContactMenu, setShowMenuButton } = useContext(
+    UIElementsVisibilityContext,
+  );
+  const wrapperRef = useRef(document.querySelector(".animated-page"));
+  wrapperRef.current = document.querySelector(".animated-page");
+  const [isMaximized, setIsMaximzed] = useState(false);
   const [{ scale }, api] = useSpring(() => ({
     scale: 1,
     config: { mass: 5, tension: 850, friction: 40 },
@@ -90,51 +103,172 @@ const Project = ({ children }) => {
     { domTarget, eventOptions: { passive: false } },
   );
 
+  useEffect(() => {
+    setShowContactMenu(!isMaximized);
+    setShowMenuButton(!isMaximized);
+  }, [isMaximized]);
+
+  console.log({ targetRef, wrapperRef });
+  function onMinimizedHandler() {
+    setIsMaximzed(false);
+  }
+
   return (
     <animated.div
       ref={domTarget}
-      style={{
-        scale,
-      }}
+      // style={{
+      //   scale,
+      // }}
     >
-      <ProjectItem>{children}</ProjectItem>
+      <ProjectItem ref={targetRef}>
+        {children(isMaximized, setIsMaximzed)}
+      </ProjectItem>
+      {isMaximized && (
+        <FullScreenExpandable
+          onMinimized={onMinimizedHandler}
+          component={ProjectItem}
+          targetRef={targetRef}
+          wrapperRef={wrapperRef}
+          style={{ display: "flex" }}
+        >
+          {(toggle) => {
+            return (
+              <Glass
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flex: 1,
+                  background: "#2f2f2f94",
+                }}
+              >
+                {children(isMaximized, toggle)}
+              </Glass>
+            );
+          }}
+        </FullScreenExpandable>
+      )}
     </animated.div>
+  );
+};
+
+const ProjectPreviewFrame = styled.iframe`
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  border: none;
+`;
+
+const WindowToolbar = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 5px;
+
+  .full-screen-icon {
+    //background: red;
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
+    &:hover {
+      cursor: pointer;
+    }
+    //padding: 10px;
+  }
+`;
+
+const AnimatedMinimize = animated(FiMinimize);
+const AnimatedMaximize = animated(FiMaximize);
+
+const MaximizeToolbar = ({ isMaximized, setIsMaximzed }) => {
+  const domTarget = useRef(null);
+
+  const [{ scale }, api] = useSpring(() => ({
+    scale: 1,
+    config: { mass: 5, tension: 850, friction: 40 },
+  }));
+
+  console.log({ domTarget });
+  useGesture(
+    {
+      onHover: ({ hovering }) => {
+        console.log(hovering);
+        return !hovering ? api({ scale: 1.0 }) : api({ scale: 1.15 });
+      },
+    },
+    { domTarget, eventOptions: { passive: false } },
+  );
+
+  return (
+    <WindowToolbar>
+      <span ref={domTarget} style={{ display: "flex" }}>
+        {isMaximized ? (
+          <AnimatedMinimize
+            style={{ scale }}
+            onClick={() => setIsMaximzed(false)}
+            className={"full-screen-icon"}
+          />
+        ) : (
+          <AnimatedMaximize
+            style={{ scale }}
+            onClick={() => setIsMaximzed(true)}
+            className={"full-screen-icon"}
+          />
+        )}
+      </span>
+    </WindowToolbar>
   );
 };
 
 function Projects() {
   return (
     <>
-      <Wrapper>
+      <Wrapper className="projects-wrapper">
         {projects.map((project) => {
           return (
             <Project>
-              <ImageWrapper>
-                <ProjectImage src={project.image} />
-              </ImageWrapper>
-              <Link to={"/projects/23"}>23</Link>
-              <ProjectContent>
-                <ProjectTitle className={"title"}>
-                  <a href={project.title.href} target="_blank">
-                    {project.title.name} <LinkIcon />
-                  </a>
-                  {project.sourceHref && (
-                    <a
-                      target="_blank"
-                      href={project.sourceHref || null}
-                      onClick={(e) => {
-                        if (!project.sourceHref) {
-                          e.preventDefault();
-                        }
-                      }}
-                    >
-                      Source {project.sourceHref && <LinkIcon />}
-                    </a>
-                  )}
-                </ProjectTitle>
-                <ProjectDescription>{project.description}</ProjectDescription>
-                <Skills skills={project.skills} />
-              </ProjectContent>
+              {(isMaximized, setIsMaximzed) => {
+                console.log({ isMaximized });
+                return (
+                  <>
+                    <MaximizeToolbar
+                      isMaximized={isMaximized}
+                      setIsMaximzed={setIsMaximzed}
+                    />
+                    <ImageWrapper $isMaximized={isMaximized}>
+                      {isMaximized ? (
+                        <ProjectPreviewFrame
+                          src={project.title.href}
+                        ></ProjectPreviewFrame>
+                      ) : (
+                        <ProjectImage src={project.image} />
+                      )}
+                    </ImageWrapper>
+                    <ProjectContent>
+                      <ProjectTitle className={"title"}>
+                        <a href={project.title.href} target="_blank">
+                          {project.title.name} <LinkIcon />
+                        </a>
+                        {project.sourceHref && (
+                          <a
+                            target="_blank"
+                            href={project.sourceHref || null}
+                            onClick={(e) => {
+                              if (!project.sourceHref) {
+                                e.preventDefault();
+                              }
+                            }}
+                          >
+                            Source {project.sourceHref && <LinkIcon />}
+                          </a>
+                        )}
+                      </ProjectTitle>
+                      <ProjectDescription>
+                        {project.description}
+                      </ProjectDescription>
+                      <Skills skills={project.skills} />
+                    </ProjectContent>
+                  </>
+                );
+              }}
             </Project>
           );
         })}

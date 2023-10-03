@@ -41,11 +41,11 @@ const projects = [
   {
     image: ticTacToeProjectThumbnail,
     title: {
-      href: "https://slitthe.github.io/freecodecamp-front-end/06-advanced-front-end-projects/tic-tac-toe/index.html/",
+      href: "https://slitthe.github.io/freecodecamp-front-end/06-advanced-front-end-projects/tic-tac-toe/index.html",
       name: "Tic Tac Toe",
     },
     sourceHref:
-      "https://github.com/Slitthe/freecodecamp-front-end/tree/master/06-advanced-front-end-projects/tic-tac-toe",
+      "https://github.com/Slitthe/freecodecamp-front-end/tree/master/06-advanced-front-end-projects/tic-tac-toe/index.html",
     description:
       "The classic Tic Tac Toe, with a bit of a twist. Contains a min-max algorithm which gives the computer the ability to play against a player locally (and also never lose). Fully built with vanilla CSS/HTML/JS",
     skills: ["HTML", "CSS", "JavaScript"],

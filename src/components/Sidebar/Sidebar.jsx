@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import NeonButton from "../NeonButton/NeonButton.jsx";
 import styled from "styled-components";
 import { useLocation } from "react-router";
@@ -6,6 +6,7 @@ import { animated, useSpring } from "react-spring";
 import { useMediaQuery } from "../../hooks/useMediaQuery.jsx";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
+import { UIElementsVisibilityContext } from "../../context/UIElementsVisibilityContext.jsx";
 
 const SidebarWrapper = animated(styled.div`
   text-align: right;
@@ -69,7 +70,7 @@ const AvatarIcon = styled(animated.div)`
 
 function Sidebar(props) {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
-
+  const { showMenuButton } = useContext(UIElementsVisibilityContext);
   const location = useLocation();
   const matchesRef = useRef();
 
@@ -139,19 +140,21 @@ function Sidebar(props) {
 
   return (
     <>
-      <AvatarIcon
-        onClick={() => {
-          if (isMenuOpened) {
-            mobileOpacityApi({ opacity: 0 });
-            heightApi({ height: "0%" });
-          } else {
-            heightApi({ height: "100%" });
-            scaleApi({ scale: 100 });
-          }
-        }}
-      >
-        {isMenuOpened ? <AiOutlineClose /> : <GiHamburgerMenu />}
-      </AvatarIcon>
+      {showMenuButton && (
+        <AvatarIcon
+          onClick={() => {
+            if (isMenuOpened) {
+              mobileOpacityApi({ opacity: 0 });
+              heightApi({ height: "0%" });
+            } else {
+              heightApi({ height: "100%" });
+              scaleApi({ scale: 100 });
+            }
+          }}
+        >
+          {isMenuOpened ? <AiOutlineClose /> : <GiHamburgerMenu />}
+        </AvatarIcon>
+      )}
 
       <Overlay style={{ scale }} />
       <SidebarWrapper

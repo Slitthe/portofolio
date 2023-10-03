@@ -10,6 +10,8 @@ export const HoverableItem = ({
   ...rest
 }) => {
   const domTarget = useRef(null);
+  console.log({ domTarget, component });
+
   const elementRef = useRef(animated(component));
   const [{ scale }, api] = useSpring(() => ({
     scale: 1,

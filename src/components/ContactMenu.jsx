@@ -3,9 +3,10 @@ import { animated, useSpring, useSprings } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import styled from "styled-components";
 import { useLocation } from "react-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FiGithub } from "react-icons/fi";
 import { AiOutlineLinkedin, AiOutlineFilePdf } from "react-icons/ai";
+import { UIElementsVisibilityContext } from "../context/UIElementsVisibilityContext.jsx";
 
 const BUTTON_SIZE = 56;
 
@@ -43,8 +44,8 @@ const BlurredBackground = styled(animated.div)`
 `;
 
 const AvatarIcon = styled(animated.a)`
-  height: ${BUTTON_SIZE}px;
-  width: ${BUTTON_SIZE}px;
+  min-height: ${BUTTON_SIZE}px;
+  min-width: ${BUTTON_SIZE}px;
   border-radius: 50%;
   margin-left: 4px;
   margin-right: 4px;
@@ -117,6 +118,7 @@ const ContactMenu = () => {
   const avatarRefs = React.useRef([]);
   const avatarRefInitialPositions = React.useRef([]);
   const containerRef = React.useRef(null);
+  const { showContactMenu } = useContext(UIElementsVisibilityContext);
 
   const isVisible = React.useRef(false);
 
@@ -247,61 +249,63 @@ const ContactMenu = () => {
 
   return (
     <>
-      <BlurredBackground
-        ref={containerRef}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
-        onPointerDown={handlePointerDown(true)}
-        {...restGestures}
-        style={{
-          height: height,
-          opacity: loadingOpacity,
-          backgroundColor: opacity.to((o) => `rgba(0,0,0,${0.2 * o})`),
-        }}
-      >
-        <FloatingButton
-          ref={buttonRef}
-          onPointerDown={handlePointerDown(false)}
+      {showContactMenu && (
+        <BlurredBackground
+          ref={containerRef}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
+          onPointerDown={handlePointerDown(true)}
           {...restGestures}
           style={{
+            height: height,
             opacity: loadingOpacity,
-            boxShadow: opacity.to(
-              (o) => `0px 3px 8px 2px rgba(0,0,0,${0.4 - o})`,
-            ),
+            backgroundColor: opacity.to((o) => `rgba(0,0,0,${0.2 * o})`),
           }}
         >
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              fill="#1a1a1a"
-              viewBox="0 0 256 256"
-            >
-              <rect width="256" height="256" fill="none"></rect>
-              <path d="M128,24A104,104,0,0,0,36.8,178l-8.5,29.9a16.1,16.1,0,0,0,4,15.8,15.8,15.8,0,0,0,15.7,4l30-8.5A104,104,0,1,0,128,24Zm32,128H96a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Zm0-32H96a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Z"></path>
-            </svg>
-          </span>
-        </FloatingButton>
-        {BUTTONS.map((button, index) => (
-          <AvatarIcon
-            key={index}
-            style={{ opacity: buttonsOpacity }}
-            href={button.url}
-            target={"_blank"}
-            // ref={(ref) => (avatarRefs.current[index] = ref)}
-            // css={{
-            //   backgroundColor: COLORS[index],
-            // }}
-            // style={{
-            //   ...springs,
-            // }}
+          <FloatingButton
+            ref={buttonRef}
+            onPointerDown={handlePointerDown(false)}
+            {...restGestures}
+            style={{
+              opacity: loadingOpacity,
+              boxShadow: opacity.to(
+                (o) => `0px 3px 8px 2px rgba(0,0,0,${0.4 - o})`,
+              ),
+            }}
           >
-            <ButtonText>{button.text}</ButtonText>
-            {BUTTONS[index].icon}
-          </AvatarIcon>
-        ))}
-      </BlurredBackground>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                fill="#1a1a1a"
+                viewBox="0 0 256 256"
+              >
+                <rect width="256" height="256" fill="none"></rect>
+                <path d="M128,24A104,104,0,0,0,36.8,178l-8.5,29.9a16.1,16.1,0,0,0,4,15.8,15.8,15.8,0,0,0,15.7,4l30-8.5A104,104,0,1,0,128,24Zm32,128H96a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Zm0-32H96a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Z"></path>
+              </svg>
+            </span>
+          </FloatingButton>
+          {BUTTONS.map((button, index) => (
+            <AvatarIcon
+              key={index}
+              style={{ opacity: buttonsOpacity }}
+              href={button.url}
+              target={"_blank"}
+              // ref={(ref) => (avatarRefs.current[index] = ref)}
+              // css={{
+              //   backgroundColor: COLORS[index],
+              // }}
+              // style={{
+              //   ...springs,
+              // }}
+            >
+              <ButtonText>{button.text}</ButtonText>
+              {BUTTONS[index].icon}
+            </AvatarIcon>
+          ))}
+        </BlurredBackground>
+      )}
     </>
   );
 };

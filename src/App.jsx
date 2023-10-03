@@ -13,11 +13,13 @@ import Projects from "./pages/Projects/Projects.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Archive from "./pages/Archive/Archive.jsx";
 import { useTransition, animated, useSpring } from "react-spring";
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useGesture } from "react-use-gesture";
 
 import About from "./pages/About/About.jsx";
 import ContactMenu from "./components/ContactMenu.jsx";
+import Test from "./pages/Test/Test.jsx";
+import { UIElementsVisibilityContext } from "./context/UIElementsVisibilityContext.jsx";
 
 const AppWrapper = styled.div`
   display: flex;
@@ -59,12 +61,6 @@ const DragToSwipeIndicator = styled.div`
 `;
 
 const navigationPaths = ["/", "/about", "/projects", "/archive", "/experience"];
-const Test = (props) => {
-  let { id } = useParams();
-  console.log({ id });
-
-  return <div>asdas</div>;
-};
 
 function App() {
   const domTarget = useRef(null);
@@ -150,6 +146,14 @@ function App() {
     },
   });
 
+  const { setShowMenuButton, setShowContactMenu } = useContext(
+    UIElementsVisibilityContext,
+  );
+
+  useEffect(() => {
+    setShowMenuButton(true);
+    setShowContactMenu(true);
+  }, [location]);
   const animatedPageRef = useRef(null);
 
   return (
@@ -171,7 +175,8 @@ function App() {
                 <Routes location={item}>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/projects/*" element={<Projects />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/test" element={<Test />} />
 
                   <Route path="/archive" element={<Archive />} />
                   <Route path="/experience" element={<Experience />} />
