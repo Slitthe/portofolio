@@ -199,7 +199,10 @@ const MaximizeToolbar = ({ isMaximized, setIsMaximzed }) => {
 
   return (
     <WindowToolbar>
-      <span ref={domTarget} style={{ display: "flex" }}>
+      <span ref={domTarget} style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ marginRight: 4 }}>
+          {isMaximized ? "Close" : "Preview"}
+        </span>
         {isMaximized ? (
           <AnimatedMinimize
             style={{ scale }}
