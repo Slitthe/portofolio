@@ -121,41 +121,39 @@ function Archive() {
     <>
       <Wrapper>
         <ProjectsTableWrapper>
-          {archiveItems
-            .sort((a, b) => (a.year < b.year ? 1 : -1))
-            .map((archiveItem) => {
-              return (
-                <Row>
-                  <YearCell>{archiveItem.year}</YearCell>
-                  <HoverableItem
-                    $isLink={archiveItem?.deployedUrl}
-                    component={NameCell}
-                    href={archiveItem?.deployedUrl || null}
-                    target="_blank"
-                    magnitude={archiveItem?.deployedUrl ? 1.02 : 1}
-                  >
-                    {archiveItem.projectName}{" "}
-                    {archiveItem?.deployedUrl && <LinkIcon />}
-                  </HoverableItem>
+          {archiveItems.map((archiveItem) => {
+            return (
+              <Row>
+                <YearCell>{archiveItem.year}</YearCell>
+                <HoverableItem
+                  $isLink={archiveItem?.deployedUrl}
+                  component={NameCell}
+                  href={archiveItem?.deployedUrl || null}
+                  target="_blank"
+                  magnitude={archiveItem?.deployedUrl ? 1.02 : 1}
+                >
+                  {archiveItem.projectName}{" "}
+                  {archiveItem?.deployedUrl && <LinkIcon />}
+                </HoverableItem>
 
-                  <SkillsCell>
-                    <Skills skills={archiveItem.skills} />
-                  </SkillsCell>
+                <SkillsCell>
+                  <Skills skills={archiveItem.skills} />
+                </SkillsCell>
 
-                  <HoverableItem
-                    component={CodeCell}
-                    href={archiveItem.codeUrl}
-                    target="_blank"
-                    magnitude={1.2}
-                  >
-                    <FiGithub />
-                  </HoverableItem>
-                  {archiveItem.description && (
-                    <DescriptionCell>{archiveItem.description}</DescriptionCell>
-                  )}
-                </Row>
-              );
-            })}
+                <HoverableItem
+                  component={CodeCell}
+                  href={archiveItem.codeUrl}
+                  target="_blank"
+                  magnitude={1.2}
+                >
+                  <FiGithub />
+                </HoverableItem>
+                {archiveItem.description && (
+                  <DescriptionCell>{archiveItem.description}</DescriptionCell>
+                )}
+              </Row>
+            );
+          })}
         </ProjectsTableWrapper>
         <GoToNextPage isTop to={"/projects"}>
           Projects

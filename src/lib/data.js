@@ -127,19 +127,6 @@ const experienceItems = [
 
 const archiveItems = [
   {
-    year: 2018,
-    projectName: "Currency Converter",
-    codeUrl: "https://github.com/Slitthe/WinFormsCurrencyConvert",
-    skills: ["C#", ".NET Core", "WinForms"],
-    description: "Windows WinForms currency convertor using the fixer.io API",
-  },
-  {
-    year: 2023,
-    projectName: "Personal Portfolio (this)",
-    codeUrl: "https://github.com/Slitthe/portofolio",
-    skills: ["React", "SCSS", "React Springs (animations)"],
-  },
-  {
     year: 2023,
     projectName: "Scrimba's Advanced React Course",
     deployedUrl: "https://slitthe.github.io/scrimba-advanced-react/",
@@ -149,6 +136,13 @@ const archiveItems = [
     description:
       "A collection of small reusable UI elements as part of the challenge for the scrimba.com's Advanced React course",
   },
+  {
+    year: 2023,
+    projectName: "Personal Portfolio (this)",
+    codeUrl: "https://github.com/Slitthe/portofolio",
+    skills: ["React", "SCSS", "React Springs (animations)"],
+  },
+
   {
     year: 2022,
     projectName: "Battleships",
@@ -220,6 +214,13 @@ const archiveItems = [
     deployedUrl:
       "https://slitthe.github.io/freecodecamp-front-end/03-intermediate-front-end-projects/03-wikipedia-viewer/index.html",
     skills: ["HTML", "CSS", "JS", "APIs", "jQuery"],
+  },
+  {
+    year: 2018,
+    projectName: "Currency Converter",
+    codeUrl: "https://github.com/Slitthe/WinFormsCurrencyConvert",
+    skills: ["C#", ".NET Core", "WinForms"],
+    description: "Windows WinForms currency convertor using the fixer.io API",
   },
   {
     year: 2018,

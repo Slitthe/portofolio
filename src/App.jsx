@@ -168,7 +168,7 @@ function App() {
             return (
               <animated.div
                 key={key}
-                style={{ ...props, top }}
+                style={{ ...props, opacity, top }}
                 className="animated-page"
                 ref={animatedPageRef}
               >
