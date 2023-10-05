@@ -68,7 +68,7 @@ const AvatarIcon = styled(animated.div)`
   }
 `;
 
-function Sidebar(props) {
+function Sidebar() {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const { showMenuButton } = useContext(UIElementsVisibilityContext);
   const location = useLocation();
@@ -84,14 +84,14 @@ function Sidebar(props) {
   }));
 
   useEffect(() => {
-    mobileOpacityApi({ opacity: 0 });
+    mobileOpacityApi.start({ opacity: 0 });
     if (location.pathname !== "/") {
-      api({
+      api.start({
         width: 250,
         opacity: 1,
       });
     } else {
-      api({
+      api.start({
         opacity: 0,
         width: 0,
       });
@@ -104,7 +104,7 @@ function Sidebar(props) {
     onRest: (e) => {
       if (e.value.scale === 100) {
         setIsMenuOpened(true);
-        mobileOpacityApi({ opacity: 1 });
+        mobileOpacityApi.start({ opacity: 1 });
       } else {
       }
     },
@@ -119,8 +119,8 @@ function Sidebar(props) {
     opacity: 0,
     onRest: (e) => {
       if (e.value.opacity === 0) {
-        heightApi({ height: matchesRef.current ? "100%" : "0%" });
-        scaleApi({ scale: 0 });
+        heightApi.start({ height: matchesRef.current ? "100%" : "0%" });
+        scaleApi.start({ scale: 0 });
         setIsMenuOpened(false);
       }
     },
@@ -129,12 +129,12 @@ function Sidebar(props) {
 
   useEffect(() => {
     if (matchesRef.current) {
-      heightApi({ height: "100%" });
-      mobileOpacityApi({ opacity: 0 });
-      scaleApi({ scale: 0 });
+      heightApi.start({ height: "100%" });
+      mobileOpacityApi.start({ opacity: 0 });
+      scaleApi.start({ scale: 0 });
       setIsMenuOpened(false);
     } else {
-      heightApi({ height: "0%" });
+      heightApi.start({ height: "0%" });
     }
   }, [matchesRef.current]);
 
@@ -144,11 +144,11 @@ function Sidebar(props) {
         <AvatarIcon
           onClick={() => {
             if (isMenuOpened) {
-              mobileOpacityApi({ opacity: 0 });
-              heightApi({ height: "0%" });
+              mobileOpacityApi.start({ opacity: 0 });
+              heightApi.start({ height: "0%" });
             } else {
-              heightApi({ height: "100%" });
-              scaleApi({ scale: 100 });
+              heightApi.start({ height: "100%" });
+              scaleApi.start({ scale: 100 });
             }
           }}
         >

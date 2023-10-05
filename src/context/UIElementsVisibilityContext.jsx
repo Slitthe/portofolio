@@ -1,6 +1,4 @@
-import { animated, useSpring } from "react-spring";
-import { useDrag } from "react-use-gesture";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
 const UIElementsVisibilityContext = createContext(null);
 

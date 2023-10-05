@@ -1,11 +1,5 @@
 import styled from "styled-components";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import Experience from "./pages/Experience/Experience.jsx";
 import background from "./assets/background.jpg";
@@ -18,7 +12,6 @@ import { useGesture } from "react-use-gesture";
 
 import About from "./pages/About/About.jsx";
 import ContactMenu from "./components/ContactMenu.jsx";
-import Test from "./pages/Test/Test.jsx";
 import { UIElementsVisibilityContext } from "./context/UIElementsVisibilityContext.jsx";
 import { pathToTitleMapping } from "./lib/data.js";
 
@@ -63,6 +56,14 @@ const DragToSwipeIndicator = styled.div`
 
 const navigationPaths = ["/", "/about", "/projects", "/archive", "/experience"];
 
+const RedirectToHome = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/", { replace: true });
+  }, []);
+  return <>sda</>;
+};
+
 function App() {
   const domTarget = useRef(null);
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ function App() {
         const isScrolledToTop = true;
 
         if (!data.dragging) {
-          api({ top: 0, opacity: 1 });
+          api.start({ top: 0, opacity: 1 });
         }
         if (isScrolledToBottom || isScrolledToTop) {
           if (Math.abs(-data.movement[1]) > 150 && !data.dragging) {
@@ -107,11 +108,11 @@ function App() {
             isDraggingRef.current = true;
 
             if (isScrolledToBottom && data.movement[1] < 0) {
-              api({ top: data.movement[1], opacity: 0.5 });
+              api.start({ top: data.movement[1], opacity: 0.5 });
             }
 
             if (isScrolledToTop && data.movement[1] > 0) {
-              api({ top: data.movement[1], opacity: 0.5 });
+              api.start({ top: data.movement[1], opacity: 0.5 });
             }
           } else {
             isDraggingRef.current = false;
@@ -123,7 +124,6 @@ function App() {
   );
 
   const location = useLocation();
-  console.log(location.pathname.startsWith("/projects/"));
   const currentPathIndex = navigationPaths.indexOf(location.pathname);
   const prevPathIndex = useRef(currentPathIndex);
 
@@ -181,10 +181,10 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/projects" element={<Projects />} />
-                  <Route path="/test" element={<Test />} />
 
                   <Route path="/archive" element={<Archive />} />
                   <Route path="/experience" element={<Experience />} />
+                  <Route path="*" element={<RedirectToHome />} />
                 </Routes>
               </animated.div>
             );

@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import GoToNextPage from "../../components/GoToNextPage/GoToNextPage.jsx";
 import styled from "styled-components";
-import { Glass } from "../../components/GlassContainer/GlassContainer.js";
 import Skills from "../../components/Skills/Skills.jsx";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
-import { animated, useSpring } from "react-spring";
-import { useGesture } from "react-use-gesture";
+import { animated } from "react-spring";
 import { HoverableItem } from "../../components/HoverableItem/HoverableItem.jsx";
 import { archiveItems } from "../../lib/data.js";
 
@@ -123,7 +121,7 @@ function Archive() {
         <ProjectsTableWrapper>
           {archiveItems.map((archiveItem) => {
             return (
-              <Row>
+              <Row key={archiveItem.projectName}>
                 <YearCell>{archiveItem.year}</YearCell>
                 <HoverableItem
                   $isLink={archiveItem?.deployedUrl}

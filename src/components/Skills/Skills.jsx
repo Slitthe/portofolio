@@ -21,7 +21,7 @@ function Skills({ skills }) {
   return (
     <SkillsWrapper>
       {skills.map((skill) => (
-        <SkillPill>{skill}</SkillPill>
+        <SkillPill key={skill}>{skill}</SkillPill>
       ))}
     </SkillsWrapper>
   );

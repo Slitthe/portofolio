@@ -53,10 +53,9 @@ function Home() {
     onRest: (e) => {
       if (e.value.opacity === 0) {
         setTitle(titles[titleIndexRef.current]);
-        api({ opacity: 1 });
+        api.start({ opacity: 1 });
       } else {
       }
-      console.log(e.value.opacity);
     },
   }));
 
@@ -69,9 +68,7 @@ function Home() {
         titleIndexRef.current++;
       }
 
-      api({ opacity: 0 });
-      console.log(titleIndexRef.current);
-      console.log(titles[titleIndexRef.current]);
+      api.start({ opacity: 0 });
     }, 5000);
     return () => {
       clearInterval(intervalRef.current);

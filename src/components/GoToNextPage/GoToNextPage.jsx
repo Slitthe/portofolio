@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { animated, useSpring } from "react-spring";
 import { useGesture } from "react-use-gesture";
 
@@ -63,17 +63,17 @@ export default function ({ isXAnimated, children, isTop, ...rest }) {
     {
       onHover: ({ hovering }) => {
         if (!hovering) {
-          scaleApi({
+          scaleApi.start({
             transform: `scale(1) translateX(-50%)`,
           });
-          backgroundApi({
+          backgroundApi.start({
             background: `radial-gradient(0px circle at center, #61616161 50%, #413d3d00 51%)`,
           });
         } else {
-          scaleApi({
+          scaleApi.start({
             transform: `scale(1.05) translateX(-50%)`,
           });
-          backgroundApi({
+          backgroundApi.start({
             background: `radial-gradient(250px circle at center, #61616161 50%, #413d3d00 51%)`,
           });
         }

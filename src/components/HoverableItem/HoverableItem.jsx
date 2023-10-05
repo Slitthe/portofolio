@@ -10,7 +10,6 @@ export const HoverableItem = ({
   ...rest
 }) => {
   const domTarget = useRef(null);
-  console.log({ domTarget, component });
 
   const elementRef = useRef(animated(component));
   const [{ scale }, api] = useSpring(() => ({
@@ -21,7 +20,7 @@ export const HoverableItem = ({
   useGesture(
     {
       onHover: ({ hovering }) =>
-        !hovering ? api({ scale: 1.0 }) : api({ scale: magnitude }),
+        !hovering ? api.start({ scale: 1.0 }) : api.start({ scale: magnitude }),
     },
     { domTarget, eventOptions: { passive: false } },
   );

@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Glass } from "../../components/GlassContainer/GlassContainer.js";
 import styled from "styled-components";
 import Skills from "../../components/Skills/Skills.jsx";
-import { animated, useSpring } from "react-spring";
-import { useDrag } from "react-use-gesture";
 import GoToNextPage from "../../components/GoToNextPage/GoToNextPage.jsx";
 import DraggableItem from "../../components/DraggableItem/DraggableItem.jsx";
 import { experienceItems } from "../../lib/data.js";
@@ -114,13 +112,13 @@ function Experience() {
                 $isLeft={index % 2 !== 0}
                 $showTopMobile={index % 2 === 0}
               >
-                {experience.sideInfoItems.map((item) => (
-                  <div>{item}</div>
+                {experience.sideInfoItems.map((item, index) => (
+                  <div key={index}>{item}</div>
                 ))}
               </TimelineItem>
             );
             return (
-              <TimelineRow>
+              <TimelineRow key={index}>
                 {index % 2 === 0 ? contentItem : rangeItem}
                 {index % 2 !== 0 ? contentItem : rangeItem}
               </TimelineRow>

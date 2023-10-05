@@ -22,7 +22,7 @@ const Content = styled.div`
 const Highlight = styled.span`
   color: var(--text-main-color);
 `;
-function About(props) {
+function About() {
   return (
     <Wrapper>
       <GoToNextPage isTop to={"/"}>

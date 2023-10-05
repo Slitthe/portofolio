@@ -17,10 +17,8 @@ function FullScreenExpandable({
   children,
   onMinimized,
   style = {},
-  ...rest
 }) {
-  console.log({ wrapperRef, targetRef });
-  const animatedWrapperRef = useRef(animated(component));
+  useRef(animated(component));
   const [isMaximized, setIsMaximized] = useState(true);
   const isDesktop = useMediaQuery(1100);
 
@@ -48,17 +46,10 @@ function FullScreenExpandable({
     config: { mass: 5, tension: 850, friction: 40, duration: 150 },
   }));
 
-  // const onScroll = useCallback(
-  //   debounce(() => {
-  //     console.log("test");
-  //   }, 250),
-  //   [],
-  // );
-
   const onScroll = useCallback(
     debounce(() => {
       if (isMaximized) {
-        api({
+        api.start({
           // right: 0,
           // bottom: 0,
           width: `${window.innerWidth - (isDesktopRef.current ? 250 : 0)}px`,
@@ -80,7 +71,7 @@ function FullScreenExpandable({
 
   useEffect(() => {
     if (isMaximized) {
-      api({
+      api.start({
         // right: 0,
         // bottom: 0,
         width: `${wrapperRef.current.scrollWidth - 1}px`,
@@ -93,7 +84,7 @@ function FullScreenExpandable({
         ...getOffsetValues(),
       };
 
-      api({
+      api.start({
         ...initialPos,
         onRest: () => onMinimized(),
       });

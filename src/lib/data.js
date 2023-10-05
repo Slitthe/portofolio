@@ -1,4 +1,3 @@
-import projectThumbnail from "../assets/project_thumbnail_2.png";
 import halartProjectThumbnail from "../assets/halart.png";
 import red2ImgProjectThumbnail from "../assets/red2img.png";
 import fotovoltaiceProjectThumbnail from "../assets/fotovoltaice.png";
@@ -70,7 +69,7 @@ const titles = [
 const experienceItems = [
   {
     title: "Front End Developer",
-    content: `Worked on a web-based platform used internally by the employees of one of the biggest online and offline retailers of tech goods in Romania, which is designed to help people compare loans offered by different credit institutions (basically a credit broker). The app included a strong dose of multi-step forms, validations, role-based renderings, email/sms confirmations. Beside implementing features, and fixing bugs, was also involved in discussion with stakeholders in order to implement the right bussiness logic`,
+    content: `Worked on a web-based platform used internally by the employees of one of the biggest online and offline retailers of tech goods in Romania, which is designed to help people compare loans offered by different credit institutions (basically a credit broker). The app included a strong dose of multi-step forms, validations, role-based renderings, email/sms confirmations. Beside implementing features, and fixing bugs, was also involved in discussion with stakeholders in order to implement the right business logic`,
     skills: ["React", "Redux", "Tailwind", "Git/GitLab", "HTML", "CSS"],
     sideInfoItems: ["2022 - 2023", "Axsys", "Romania (Remote)"],
   },
@@ -108,7 +107,7 @@ const experienceItems = [
   },
   {
     title: "Junior Full Stack Developer",
-    content: `In this role I was exposed to a huge variety of technologies, projects, working styles, collaboration. From being a part of a grenfield project, to creating detailed prototypes and mockups, to the maintanance of existing projects. In addition to the tehnical side, I was also invovled in the internship process (creating tests, mentoring, holding technical presentations .etc)`,
+    content: `In this role I was exposed to a huge variety of technologies, projects, working styles, collaboration. From being a part of a greenfield project, to creating detailed prototypes and mockups, to the maintenance of existing projects. In addition to the technical side, I was also involved in the internship process (creating tests, mentoring, holding technical presentations .etc)`,
     skills: [
       "C#",
       ".NET/.NET Core",

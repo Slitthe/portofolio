@@ -7,12 +7,9 @@ import { useSpring, animated } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import { FiExternalLink, FiMinimize } from "react-icons/fi";
 import { projects } from "../../lib/data.js";
-import { Link } from "react-router-dom";
 import FullScreenExpandable from "../../components/FullScreenExpandable/FullScreenExpandable.jsx";
 import { FiMaximize } from "react-icons/fi";
-import UIElementsVisibilityContextProvider, {
-  UIElementsVisibilityContext,
-} from "../../context/UIElementsVisibilityContext.jsx";
+import { UIElementsVisibilityContext } from "../../context/UIElementsVisibilityContext.jsx";
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -90,8 +87,8 @@ const Project = ({ children }) => {
   );
   const wrapperRef = useRef(document.querySelector(".animated-page"));
   wrapperRef.current = document.querySelector(".animated-page");
-  const [isMaximized, setIsMaximzed] = useState(false);
-  const [{ scale }, api] = useSpring(() => ({
+  const [isMaximized, setIsMaximized] = useState(false);
+  const [, api] = useSpring(() => ({
     scale: 1,
     config: { mass: 5, tension: 850, friction: 40 },
   }));
@@ -99,7 +96,9 @@ const Project = ({ children }) => {
   useGesture(
     {
       onHover: ({ hovering }) => {
-        return !hovering ? api({ scale: 1.0 }) : api({ scale: 1.05 });
+        return !hovering
+          ? api.start({ scale: 1.0 })
+          : api.start({ scale: 1.05 });
       },
     },
     { domTarget, eventOptions: { passive: false } },
@@ -110,9 +109,8 @@ const Project = ({ children }) => {
     setShowMenuButton(!isMaximized);
   }, [isMaximized]);
 
-  console.log({ targetRef, wrapperRef });
   function onMinimizedHandler() {
-    setIsMaximzed(false);
+    setIsMaximized(false);
   }
 
   return (
@@ -123,7 +121,7 @@ const Project = ({ children }) => {
       // }}
     >
       <ProjectItem ref={targetRef}>
-        {children(isMaximized, setIsMaximzed)}
+        {children(isMaximized, setIsMaximized)}
       </ProjectItem>
       {isMaximized && (
         <FullScreenExpandable
@@ -180,7 +178,7 @@ const WindowToolbar = styled.div`
 const AnimatedMinimize = animated(FiMinimize);
 const AnimatedMaximize = animated(FiMaximize);
 
-const MaximizeToolbar = ({ isMaximized, setIsMaximzed }) => {
+const MaximizeToolbar = ({ isMaximized, setIsMaximized }) => {
   const domTarget = useRef(null);
 
   const [{ scale }, api] = useSpring(() => ({
@@ -188,12 +186,12 @@ const MaximizeToolbar = ({ isMaximized, setIsMaximzed }) => {
     config: { mass: 5, tension: 850, friction: 40 },
   }));
 
-  console.log({ domTarget });
   useGesture(
     {
       onHover: ({ hovering }) => {
-        console.log(hovering);
-        return !hovering ? api({ scale: 1.0 }) : api({ scale: 1.15 });
+        return !hovering
+          ? api.start({ scale: 1.0 })
+          : api.start({ scale: 1.15 });
       },
     },
     { domTarget, eventOptions: { passive: false } },
@@ -208,13 +206,13 @@ const MaximizeToolbar = ({ isMaximized, setIsMaximzed }) => {
         {isMaximized ? (
           <AnimatedMinimize
             style={{ scale }}
-            onClick={() => setIsMaximzed(false)}
+            onClick={() => setIsMaximized(false)}
             className={"full-screen-icon"}
           />
         ) : (
           <AnimatedMaximize
             style={{ scale }}
-            onClick={() => setIsMaximzed(true)}
+            onClick={() => setIsMaximized(true)}
             className={"full-screen-icon"}
           />
         )}
@@ -229,14 +227,13 @@ function Projects() {
       <Wrapper className="projects-wrapper">
         {projects.map((project) => {
           return (
-            <Project>
-              {(isMaximized, setIsMaximzed) => {
-                console.log({ isMaximized });
+            <Project key={project.title.name}>
+              {(isMaximized, setIsMaximized) => {
                 return (
                   <>
                     <MaximizeToolbar
                       isMaximized={isMaximized}
-                      setIsMaximzed={setIsMaximzed}
+                      setIsMaximized={setIsMaximized}
                     />
                     <ImageWrapper $isMaximized={isMaximized}>
                       {isMaximized ? (

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { animated, useSpring, useSprings } from "react-spring";
+import { animated, useSpring } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import styled from "styled-components";
 import { useLocation } from "react-router";
@@ -112,7 +112,7 @@ const ButtonText = styled.div`
 `;
 
 const ContactMenu = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const buttonRef = React.useRef(null);
   const avatarRefs = React.useRef([]);
@@ -128,11 +128,7 @@ const ContactMenu = () => {
     config: { mass: 3, tension: 450, friction: 40, duration: 300 },
   }));
 
-  useEffect(() => {
-    console.log({ isMenuOpen });
-  }, [isMenuOpen]);
-
-  const [{ x, y, opacity }, api] = useSpring(
+  const [{ opacity }, api] = useSpring(
     () => ({
       x: 0,
       y: 0,
@@ -169,7 +165,6 @@ const ContactMenu = () => {
 
   const bindGestures = useGesture({
     onHover: ({ hovering }) => {
-      console.log({ hovering });
       if (hovering) {
         if (backgroundTimeoutRef.current) {
           clearTimeout(backgroundTimeoutRef.current);
@@ -197,7 +192,7 @@ const ContactMenu = () => {
         }, 2000);
 
         avatarTimeoutRef.current = setTimeout(() => {
-          containerApi({
+          containerApi.start({
             height: 64,
             opacity: 0,
             onRest: () => {
@@ -237,11 +232,11 @@ const ContactMenu = () => {
 
   useEffect(() => {
     if (location.pathname !== "/") {
-      loadingOpacityApi({
+      loadingOpacityApi.start({
         opacity: 1,
       });
     } else {
-      loadingOpacityApi({
+      loadingOpacityApi.start({
         opacity: 0,
       });
     }
