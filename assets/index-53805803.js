@@ -320,6 +320,7 @@ function print() { __p += __j.call(arguments, '') }
   height: 100%;
 `,OO=J.div`
   padding: 10px 20px;
+  ${e=>e.$isMaximized?"background: rgba(47, 47, 47, 0.85);":""};
 `,LO=J.div`
   display: flex;
   justify-content: space-between;
@@ -362,7 +363,7 @@ function print() { __p += __j.call(arguments, '') }
     }
     //padding: 10px;
   }
-`,$O=nt(oO),FO=nt(iO),jO=({isMaximized:e,setIsMaximzed:t})=>{const n=O.useRef(null),[{scale:r},o]=wt(()=>({scale:1,config:{mass:5,tension:850,friction:40}}));return console.log({domTarget:n}),Ki({onHover:({hovering:s})=>(console.log(s),o(s?{scale:1.15}:{scale:1}))},{domTarget:n,eventOptions:{passive:!1}}),M.jsx(zO,{children:M.jsxs("span",{ref:n,style:{display:"flex",alignItems:"center"},children:[M.jsx("span",{style:{marginRight:4},children:e?"Close":"Preview"}),e?M.jsx($O,{style:{scale:r},onClick:()=>t(!1),className:"full-screen-icon"}):M.jsx(FO,{style:{scale:r},onClick:()=>t(!0),className:"full-screen-icon"})]})})};function bO(){return M.jsx(M.Fragment,{children:M.jsxs(RO,{className:"projects-wrapper",children:[dO.map(e=>M.jsx(NO,{children:(t,n)=>(console.log({isMaximized:t}),M.jsxs(M.Fragment,{children:[M.jsx(jO,{isMaximized:t,setIsMaximzed:n}),M.jsx(IO,{$isMaximized:t,children:t?M.jsx(DO,{src:e.title.href}):M.jsx(AO,{src:e.image})}),M.jsxs(OO,{children:[M.jsxs(LO,{className:"title",children:[M.jsxs("a",{href:e.title.href,target:"_blank",children:[e.title.name," ",M.jsx(Ty,{})]}),e.sourceHref&&M.jsxs("a",{target:"_blank",href:e.sourceHref||null,onClick:r=>{e.sourceHref||r.preventDefault()},children:["Source ",e.sourceHref&&M.jsx(Ty,{})]})]}),M.jsx(MO,{children:e.description}),M.jsx(N0,{skills:e.skills})]})]}))})),M.jsx(ui,{isTop:!0,to:"/about",children:"About"}),M.jsx(ui,{to:"/archive",children:"Archive"})]})})}const UO=J.div`
+`,$O=nt(oO),FO=nt(iO),jO=({isMaximized:e,setIsMaximzed:t})=>{const n=O.useRef(null),[{scale:r},o]=wt(()=>({scale:1,config:{mass:5,tension:850,friction:40}}));return console.log({domTarget:n}),Ki({onHover:({hovering:s})=>(console.log(s),o(s?{scale:1.15}:{scale:1}))},{domTarget:n,eventOptions:{passive:!1}}),M.jsx(zO,{children:M.jsxs("span",{ref:n,style:{display:"flex",alignItems:"center"},children:[M.jsx("span",{style:{marginRight:4},children:e?"Close":"Preview"}),e?M.jsx($O,{style:{scale:r},onClick:()=>t(!1),className:"full-screen-icon"}):M.jsx(FO,{style:{scale:r},onClick:()=>t(!0),className:"full-screen-icon"})]})})};function bO(){return M.jsx(M.Fragment,{children:M.jsxs(RO,{className:"projects-wrapper",children:[dO.map(e=>M.jsx(NO,{children:(t,n)=>(console.log({isMaximized:t}),M.jsxs(M.Fragment,{children:[M.jsx(jO,{isMaximized:t,setIsMaximzed:n}),M.jsx(IO,{$isMaximized:t,children:t?M.jsx(DO,{src:e.title.href}):M.jsx(AO,{src:e.image})}),M.jsxs(OO,{$isMaximized:t,children:[M.jsxs(LO,{className:"title",children:[M.jsxs("a",{href:e.title.href,target:"_blank",children:[e.title.name," ",M.jsx(Ty,{})]}),e.sourceHref&&M.jsxs("a",{target:"_blank",href:e.sourceHref||null,onClick:r=>{e.sourceHref||r.preventDefault()},children:["Source ",e.sourceHref&&M.jsx(Ty,{})]})]}),M.jsx(MO,{children:e.description}),M.jsx(N0,{skills:e.skills})]})]}))})),M.jsx(ui,{isTop:!0,to:"/about",children:"About"}),M.jsx(ui,{to:"/archive",children:"Archive"})]})})}const UO=J.div`
   position: relative;
   height: 100%;
   width: 100%;
