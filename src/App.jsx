@@ -20,6 +20,7 @@ import About from "./pages/About/About.jsx";
 import ContactMenu from "./components/ContactMenu.jsx";
 import Test from "./pages/Test/Test.jsx";
 import { UIElementsVisibilityContext } from "./context/UIElementsVisibilityContext.jsx";
+import { pathToTitleMapping } from "./lib/data.js";
 
 const AppWrapper = styled.div`
   display: flex;
@@ -155,6 +156,10 @@ function App() {
     setShowContactMenu(true);
   }, [location]);
   const animatedPageRef = useRef(null);
+
+  useEffect(() => {
+    document.title = pathToTitleMapping[location.pathname];
+  }, [location]);
 
   return (
     <>

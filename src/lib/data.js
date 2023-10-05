@@ -266,4 +266,12 @@ const archiveItems = [
   },
 ];
 
+export const pathToTitleMapping = {
+  "/": "Silviu - Portfolio",
+  "/about": "Silviu - About",
+  "/projects": "Silviu - Projects ",
+  "/archive": "Silviu - Projects Archive",
+  "/experience": "Silviu - Experience",
+};
+
 export { projects, titles, experienceItems, archiveItems };
