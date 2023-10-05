@@ -52,6 +52,8 @@ const ProjectImage = styled.img`
 
 const ProjectContent = styled.div`
   padding: 10px 20px;
+  ${(props) =>
+    props.$isMaximized ? "background: rgba(47, 47, 47, 0.85);" : ""};
 `;
 
 const ProjectTitle = styled.div`
@@ -245,7 +247,7 @@ function Projects() {
                         <ProjectImage src={project.image} />
                       )}
                     </ImageWrapper>
-                    <ProjectContent>
+                    <ProjectContent $isMaximized={isMaximized}>
                       <ProjectTitle className={"title"}>
                         <a href={project.title.href} target="_blank">
                           {project.title.name} <LinkIcon />
