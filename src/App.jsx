@@ -7,7 +7,7 @@ import Projects from "./pages/Projects/Projects.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Archive from "./pages/Archive/Archive.jsx";
 import { useTransition, animated, useSpring } from "react-spring";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { StrictMode, useContext, useEffect, useRef } from "react";
 import { useGesture } from "react-use-gesture";
 
 import About from "./pages/About/About.jsx";

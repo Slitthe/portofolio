@@ -1,9 +1,19 @@
 import halartProjectThumbnail from "../assets/halart.png";
-import red2ImgProjectThumbnail from "../assets/red2img.png";
 import fotovoltaiceProjectThumbnail from "../assets/fotovoltaice.png";
-import ticTacToeProjectThumbnail from "../assets/tictac.png";
+import designoProjectThumbnail from "../assets/designo.png";
 
 const projects = [
+  {
+    image: designoProjectThumbnail,
+    title: {
+      href: "https://designo-xp9s.onrender.com/",
+      name: "Designo",
+    },
+    sourceHref: "https://github.com/Slitthe/designo/",
+    description:
+      "Multi-page Next.js static website, build according to a figma design, with a heavy emphasis on pixel-perfect replica and responsiveness.",
+    skills: ["React", "Next.js", "Tailwind", "Figma"],
+  },
   {
     image: halartProjectThumbnail,
     title: {
@@ -15,46 +25,7 @@ const projects = [
       "Fully features Wordpress website, built as a custom theme. Built for a small theater group (mock data is used for the demo website). Responsible for all parts of the website (design, hosting, development, SEO).",
     skills: ["JavaScript", "CSS/SCSS", "HTML", "Wordpress", "PHP", "jQuery"],
   },
-  {
-    image: red2ImgProjectThumbnail,
-    title: {
-      href: "https://slitthe.github.io/red2img/",
-      name: "Red2Img",
-    },
-    sourceHref: "https://github.com/Slitthe/red2img",
-    description:
-      "Reddit image gallery viewer with the ability to customize your own subreddits feeds",
-    skills: ["HTML", "CSS", "JavaScript", "jQuery", "APIs"],
-  },
-  {
-    image: fotovoltaiceProjectThumbnail,
-    title: {
-      href: "https://fotovoltaice.energobit.com/",
-      name: "Fotovoltaice",
-    },
-    sourceHref: "",
-    description:
-      "Landing website build to present the solar panel offerings for a big player in Romania's energy sector.",
-    skills: ["Wordpress", "Elementor", "HTML/CSS"],
-  },
-  {
-    image: ticTacToeProjectThumbnail,
-    title: {
-      href: "https://slitthe.github.io/freecodecamp-front-end/06-advanced-front-end-projects/tic-tac-toe/index.html",
-      name: "Tic Tac Toe",
-    },
-    sourceHref:
-      "https://github.com/Slitthe/freecodecamp-front-end/tree/master/06-advanced-front-end-projects/tic-tac-toe/index.html",
-    description:
-      "The classic Tic Tac Toe, with a bit of a twist. Contains a min-max algorithm which gives the computer the ability to play against a player locally (and also never lose). Fully built with vanilla CSS/HTML/JS",
-    skills: ["HTML", "CSS", "JavaScript"],
-  },
 ];
-
-/*
- *
- *
- * */
 
 const titles = [
   "Front-end engineer",
@@ -171,6 +142,14 @@ const archiveItems = [
       "Rick and Morty character list display using the Rick and Morty's API, part of a take home assignment",
   },
   {
+    year: 2020,
+    projectName: "Fotovoltaice",
+    description:
+      "Landing website build to present the solar panel offerings for a big player in Romania's energy sector.",
+    deployedUrl: "https://fotovoltaice.energobit.com/",
+    skills: ["Wordpress", "Elementor", "HTML/CSS"],
+  },
+  {
     year: 2019,
     projectName: ".bmp Color to Grayscale convertor",
     codeUrl: "https://github.com/Slitthe/BMPImageGrayscale",
@@ -178,6 +157,26 @@ const archiveItems = [
 
     description:
       "Small script which converts a .bmp image from color to a grayscale intensity",
+  },
+  {
+    year: 2019,
+    projectName: "Red2Img",
+    codeUrl: "https://github.com/Slitthe/red2img",
+    skills: ["HTML", "CSS", "JavaScript", "jQuery", "APIs"],
+    deployedUrl: "https://slitthe.github.io/red2img/",
+    description:
+      "Reddit image gallery viewer with the ability to customize your own subreddits feeds",
+  },
+  {
+    year: 2018,
+    projectName: "Tic-Tac-Toe",
+    codeUrl:
+      "https://github.com/Slitthe/freecodecamp-front-end/tree/master/06-advanced-front-end-projects/tic-tac-toe",
+    skills: ["HTML", "CSS", "JavaScript"],
+    deployedUrl:
+      "https://slitthe.github.io/freecodecamp-front-end/06-advanced-front-end-projects/tic-tac-toe/index.html",
+    description:
+      "Tic-tac-toe game with an implementation of the min-max algorithm (you can play against the computer)",
   },
   {
     year: 2018,
